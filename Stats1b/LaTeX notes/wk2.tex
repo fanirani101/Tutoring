@@ -1,0 +1,251 @@
+\phantomsection
+\section*{Week 3}
+\addcontentsline{toc}{section}{Week 3}
+
+\phantomsection
+\subsection*{More on prioris}
+\addcontentsline{toc}{subsection}{More on prioris}
+Prior to commencing a study, a psychologist/statistician needs to be aware that sample data can be misleading in that it is not always representative of the population. You should be familiar with \Cref{tab:priori1} but you may not understand what it means graphically. It is important to remember that the probabilities $\alpha$ and $\beta$ are conditional probabilities, in that they are conditional on which reality is actually true. 
+\FloatBarrier
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[h]
+\centering
+\begin{tabular}{cl|c|c}
+ & \multicolumn{1}{c|}{} & \multicolumn{2}{c|}{\textbf{Reality}} \\
+ & \multicolumn{1}{c|}{} & $H_0$ is true & \multicolumn{1}{c|}{$H_A$ is true} \\ \hline
+\multirow{2}{*}{\STAB{\rotatebox[origin=c]{90}{Decision}}} & Reject $H_0$ & \begin{tabular}[c]{@{}c@{}}\textbf{Type I error}\\ $\alpha$\\ ``false alarm''\end{tabular} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}True positive\\ \textbf{Power}\\ $1-\beta$\\ Sensitivity\end{tabular}} \\ \cline{2-4} 
+ & Accept $H_0$ & \begin{tabular}[c]{@{}c@{}}True negative\\ $1-\alpha$\\ Specificity\end{tabular} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}\textbf{Type II error}\\ $\beta$\\ ``miss rate''\end{tabular}}
+\end{tabular}
+\caption{}
+\label{tab:priori1}
+\end{table}
+\FloatBarrier
+In hypothesis testing, you assume that $H_0$ is the true reality, but you accept that you might be wrong so $H_A$ is a possible reality. Under the null hypothesis, you assume (if you are taking about means) that $\mu=\mu_0$ where $\mu_0$ is some value, say zero ($\mu_0=0$). You accept that there is an $100 \times\alpha$\% possibility that you will have data which is not representative of the population, for whatever reason (usually attributed to human error in the data collection itself). This says that there is a $100 \times(1-\alpha)$\% possibility that the sample you collected is representative of your population. If $H_0$ is the true reality it means that (in terms of $\mu=\mu_0$ and $\alpha = 0.05$) the probability that the sample mean is within 1.96 standard deviations (or lies 1.645 standard deviations away, if one-tailed) from the population mean, given that the population mean is equal to $\mu_0$, is 0.95. 
+\\
+In the case that you were wrong, so $H_0$ is not the true reality and $H_A$ is, you accept that this is probable with $\alpha$\%, and in fact can calculate \textbf{when} you would discover this via your sample. 
+\begin{flalign}
+    \text{Two-sided $H_A$: $\mu\ne\mu_0$, with $\alpha = 0.05$} && \frac{\vbrac{\Bar{x} - \mu_0}}{\sfrac{\sigma}{\sqrt{n}}} &\geq 1.96 & \\
+    && \vbrac{\Bar{x} - \mu_0} &\geq 1.96 \times \frac{\sigma}{\sqrt{n}} &\\
+    && \Bar{x} &\geq \mu_0 + 1.96 \times \frac{\sigma}{\sqrt{n}} & \\
+    && \Bar{x} &\leq \mu_0 - 1.96 \times \frac{\sigma}{\sqrt{n}} & 
+    \intertext{If we have that the sample mean is more than some value equal to $\mu_0 + 1.96 \times \sfrac{\sigma}{\sqrt{n}}$, or less than some value equal to $\mu_0 - 1.96 \times \sfrac{\sigma}{\sqrt{n}}$, then our $p$-value is less than $\alpha$ (refer to \Cref{fig:priori1a}).}
+    && \pr{\Bar{X} \geq \mu_0 + 1.96 \times \frac{\sigma}{\sqrt{n}}} &\approx 0.025 \\
+    && \pr{\Bar{X} \leq \mu_0 - 1.96 \times \frac{\sigma}{\sqrt{n}}} &\approx 0.025 \\
+    \text{One-sided $H_A$: $\mu>\mu_0$ (right-tailed), with $\alpha = 0.05$} && \frac{\Bar{x} - \mu_0}{\sfrac{\sigma}{\sqrt{n}}} &\geq 1.645 & \\
+    && \Bar{x} - \mu_0 &\geq 1.645 \times \frac{\sigma}{\sqrt{n}} &\\
+    && \Bar{x} &\geq \mu_0 + 1.645 \times \frac{\sigma}{\sqrt{n}} & 
+    \intertext{If we have that the sample mean is more than some value equal to $\mu_0 + 1.645 \times \sfrac{\sigma}{\sqrt{n}}$ then our $p$-value is less than $\alpha$ (refer to \Cref{fig:priori1b}).}
+    && \pr{\Bar{X} \geq \mu_0 + 1.645 \times \frac{\sigma}{\sqrt{n}}} &\approx 0.05 \\
+    \text{One-sided $H_A$: $\mu<\mu_0$ (left-tailed), with $\alpha = 0.05$} && \frac{\Bar{x} - \mu_0}{\sfrac{\sigma}{\sqrt{n}}} &\leq -1.645 & \\
+    && \Bar{x} - \mu_0 &\leq -1.645 \times \frac{\sigma}{\sqrt{n}} &\\
+    && \Bar{x} &\leq \mu_0 - 1.645 \times \frac{\sigma}{\sqrt{n}} & 
+    \intertext{If we have that the sample mean is less than some value equal to $\mu_0 - 1.645 \times \sfrac{\sigma}{\sqrt{n}}$ then our $p$-value is less than $\alpha$ (refer to \Cref{fig:priori1c}).}
+    && \pr{\Bar{X} \leq \mu_0 - 1.645 \times \frac{\sigma}{\sqrt{n}}} &\approx 0.05 &
+\end{flalign}
+What happens if we modify our acceptance level, $\alpha$? If we \textit{decrease} $\alpha$, the shaded areas in \Cref{fig:priori1} will become smaller, which means that our ``cut-off values'' will change to values which are further from $\mu_0$. A decrease in $\alpha$ will result in an increase of $\beta$ in samples of unchanged size (\Cref{fig:priori3}) - \textit{reduction of power}. If we \textit{increase} our $\alpha$, the shaded areas in \Cref{fig:priori1} will become larger, which means that our ``cut-off values'' will change to values which are closer to $\mu_0$. An increase in $\alpha$ will result in an decrease of $\beta$ in samples of unchanged size (\Cref{fig:priori3}) - \textit{increase of power}.
+\FloatBarrier
+\begin{figure}[h]
+\centering
+    \begin{subfigure}[b]{\linewidth}
+    \begin{tikzpicture}
+    \begin{axis}[no markers, domain=-4:4, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=5cm, width=0.96\linewidth, xtick={0}, xticklabels={$\mu_0$}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major]
+        \addplot [fill=magenta!20, draw=none, domain=-4:-1.96] {gauss(0,1)} \closedcycle;
+        \addplot [fill=magenta!20, draw=none, domain=1.96:4] {gauss(0,1)} \closedcycle;
+        \addplot [very thick,cyan!50!black] {gauss(0,1)};
+        \node[circle,fill=blue,scale=0.25,pin=270:{$\mu_0 + 1.96 \times \sfrac{\sigma}{\sqrt{n}}$}] at (axis cs:1.96,0) {};
+        \node[circle,fill=blue,scale=0.25,pin=270:{$\mu_0 - 1.96 \times \sfrac{\sigma}{\sqrt{n}}$}] at (axis cs:-1.96,0) {};
+        %\draw (0,-0.001) node[black, below] {$\mu_0$};
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Approximately 95\% of sample means lie within 1.96 standard deviations from the mean.}
+    \label{fig:priori1a}
+    \end{subfigure}
+    \\[1ex]
+    \begin{subfigure}[b]{0.45\linewidth}
+    \begin{tikzpicture}
+    \begin{axis}[no markers, domain=-4:4, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=3.5cm, width=\linewidth, xtick={0}, xticklabels={$\mu_0$}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major]
+        \addplot [fill=magenta!20, draw=none, domain=1.645:4] {gauss(0,1)} \closedcycle;
+        \addplot [very thick,cyan!50!black] {gauss(0,1)};
+        \node[circle,fill=blue,scale=0.25,pin=270:{$\mu_0 + 1.645 \times \sfrac{\sigma}{\sqrt{n}}$}] at (axis cs:1.645,0) {};
+        %\draw (0,-0.001) node[black, below] {$\mu_0$};
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Approximately 95\% of sample means lie below 1.645 standard deviations above the mean.}
+    \label{fig:priori1b}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.45\linewidth}
+    \begin{tikzpicture}
+    \begin{axis}[no markers, domain=-4:4, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=3.5cm, width=\linewidth, xtick={0}, xticklabels={$\mu_0$}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major]
+        \addplot [fill=magenta!20, draw=none, domain=-4:-1.645] {gauss(0,1)} \closedcycle;
+        \addplot [very thick,cyan!50!black] {gauss(0,1)};
+        \node[circle,fill=blue,scale=0.25,pin={270:{$\mu_0 - 1.645 \times \sfrac{\sigma}{\sqrt{n}}$}}] at (axis cs:-1.645,0) {};
+        %\draw (0,-0.001) node[black, below] {$\mu_0$};
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Approximately 95\% of sample means lie above 1.645 standard deviations below the mean.}
+    \label{fig:priori1c}
+    \end{subfigure}
+\caption{For a given random variable $X$ which has mean $\mu_0$ and standard deviation $\sigma$, the sampling distribution of the mean of size $n$ is Normal with mean $\mu_0$ and standard deviation $\sigma/\sqrt{n}$ (the Standard Error) which is denoted $\Bar{X} \sim \mathcal{N} \brac{\mu_0, \sigma^2 /n }$.}
+\label{fig:priori1}
+\end{figure}
+\FloatBarrier
+Now that we have determined the ``cut-off values'' (when we reject $H_0$, based on $\mu_0$, $n$ and $\alpha$), if we were to learn the \textbf{true value of $\mu$ in the population}, let's call it $\mu_A$, it is possible to compute the power of our test, i.e. the probability of rejection given that $H_0$ \textbf{should} be rejected. 
+\begin{flalign}
+    \begin{matrix*}[l]
+        \text{Two-sided $H_A$: $\mu\ne\mu_0$,} \\
+        \text{with $\alpha = 0.05$}
+    \end{matrix*} 
+    && \text{power} &= \given{\text{reject }H_0}{H_0 \text{ is not the true reality}} & 
+    \intertext{We define two scenarios, where the true mean $\mu_A$ is greater than the hypothesised mean $\mu_0$ and when it is less than.}
+    &&&= 
+    \begin{dcases}
+        \pr{\left. \Bar{X}\geq \mu_0 + 1.96 \times \frac{\sigma}{\sqrt{n}} \right| \mu = \mu_A }, & \mu_A > \mu_0 \\
+        \pr{ \left. \Bar{X}\leq \mu_0 - 1.96 \times \frac{\sigma}{\sqrt{n}} \right| \mu = \mu_A}, & \mu_A < \mu_0 
+    \end{dcases} &
+    \shortintertext{Now convert to the standard normal distribution and get your $z$-scores:}
+    &&&= 
+    \begin{dcases}
+        \pr{ \frac{\Bar{X} - \mu_A}{\sigma/\sqrt{n}} \geq \frac{\mu_0 - \mu_A}{\sigma/\sqrt{n}} + 1.96 }, & \mu_A > \mu_0 \\
+        \pr{ \frac{\Bar{X} - \mu_A}{\sigma/\sqrt{n}} \leq \frac{\mu_0 - \mu_A}{\sigma/\sqrt{n}} - 1.96 }, & \mu_A < \mu_0 
+    \end{dcases} &\\
+    &&&= 
+    \begin{dcases}
+        \pr{ Z \geq \frac{\mu_0 - \mu_A}{\sigma/\sqrt{n}} + 1.96 }, & \mu_A > \mu_0 \\
+        \pr{ Z \leq \frac{\mu_0 - \mu_A}{\sigma/\sqrt{n}} - 1.96 }, & \mu_A < \mu_0 
+    \end{dcases} &
+    \intertext{In two-sided hypothesis testing, we can use the ``cut-off values'' to calculate power using the $z$-test. So, if $\mu_A>\mu_0$, we transform the ``cut-off value'' $\bar{x} = \mu_0 + 1.96 \times \sfrac{\sigma}{\sqrt{n}}$ into a $z$-score using $\mu_A$ \textbf{which should be negative}. The reason it \textbf{should be negative} is that will imply that our power is more than 50\%; if you achieve a positive $z$-score with the $\geq$ sign, then you will certainly have low statistical power. We can transform this negative $z$-score with the $\geq$ sign into a positive $z$-score with the $\leq$ sign as follows:}
+    &&\pr{ Z \geq \frac{\mu_0 - \mu_A}{\sigma/\sqrt{n}} + 1.96 } &= \pr{ Z \leq \frac{\mu_A - \mu_0}{\sigma/\sqrt{n}} - 1.96 }, \qquad \mu_A > \mu_0. &
+    \end{flalign}
+    We are able to do this because the standard Normal distribution is symmetric about the mean of zero. It is now possible to read this value from the ``regular'' $z$-table, which usually shows $\leq$ and positive $z$-values. If $\mu_A< \mu_0$, then the transformed ``cut-off'' value that we calculated is already positive and we already have the $\leq$ sign, so it is easy to read from the table.
+    \begin{flalign}
+    \begin{matrix*}[l]
+        \text{One-sided $H_A$: $\mu>\mu_0$ (right-tailed),} \\
+        \text{with $\alpha = 0.05$}
+    \end{matrix*}
+    && \text{power} &= \given{\text{reject }H_0}{H_0 \text{ is not the true reality}} &\\
+    &&&= \pr{\left. \Bar{X} \geq \mu_0 + 1.645 \times \frac{\sigma}{\sqrt{n}} \right| \mu = \mu_A } &\\
+    &&&= \pr{\frac{\bar{X} - \mu_A}{\sigma/\sqrt{n}} \geq \frac{\mu_0 - \mu_A}{\sigma/\sqrt{n}} + 1.645} & \\
+    &&&= \pr{Z \geq \frac{\mu_0 - \mu_A}{\sigma/\sqrt{n}} + 1.645} &
+    \intertext{Again, we can transform this negative $z$-score (\textbf{should be negative} because $\mu_0<\mu_A$ and \textbf{power should be more than 50\%}) with $\geq$ sign to a positive $z$-score with $\leq$ sign:}
+    &&&= \pr{Z \leq \frac{\mu_A - \mu_0}{\sigma/\sqrt{n}} - 1.645} & \\
+    \begin{matrix*}[l]
+        \text{One-sided $H_A$: $\mu<\mu_0$ (left-tailed),} \\
+        \text{with $\alpha = 0.05$}
+    \end{matrix*} 
+    && \text{power} &= \given{\text{reject }H_0}{H_0 \text{ is not the true reality}} &\\
+    &&&= \pr{\left. \Bar{X} \leq \mu_0 - 1.645 \times \frac{\sigma}{\sqrt{n}} \right| \mu = \mu_A } &\\
+    &&&= \pr{\frac{\bar{X} - \mu_A}{\sigma/\sqrt{n}} \leq \frac{\mu_0 - \mu_A}{\sigma/\sqrt{n}} - 1.645} & \\
+    &&&= \pr{Z \leq \frac{\mu_0 - \mu_A}{\sigma/\sqrt{n}} - 1.645} &
+\end{flalign}
+
+\FloatBarrier
+\begin{figure}[h]
+\centering
+    \begin{subfigure}[b]{0.45\linewidth}
+    \begin{tikzpicture}
+    \begin{axis}[no markers, domain=-4:4, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=3.5cm, width=\linewidth, xtick={0}, xticklabels={$\mu_A$}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major]
+        \addplot [fill=magenta!20, draw=none, domain=-1.96:4] {gauss(0,1)} \closedcycle;
+        %\addplot [fill=magenta!20, draw=none, domain=1.96:4] {gauss(0,1)} \closedcycle;
+        \addplot [very thick,cyan!50!black] {gauss(0,1)};
+        %\node[circle,fill=blue,scale=0.25,pin=270:{$\mu_0 + 1.96 \times \sfrac{\sigma}{\sqrt{n}}$}] at (axis cs:1.96,0) {};
+        \node[circle,fill=blue,scale=0.25,pin=270:{$\mu_0 + 1.96 \times \sfrac{\sigma}{\sqrt{n}}$}] at (axis cs:-1.96,0) {};
+        %\draw (0,-0.001) node[black, below] {$\mu_0$};
+    \end{axis}
+    \end{tikzpicture}
+    \caption{If the true mean $\mu_A$ is greater than $\mu_0$, we calculate power as the probability of observing a sample mean greater than our ``cut-off value'' $\mu_0 + 1.96 \times \sfrac{\sigma}{\sqrt{n}}$, where $\alpha = 0.05$.}
+    \label{fig:priori2a}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.45\linewidth}
+    \begin{tikzpicture}
+    \begin{axis}[no markers, domain=-4:4, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=3.5cm, width=\linewidth, xtick={0}, xticklabels={$\mu_A$}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major]
+        %\addplot [fill=magenta!20, draw=none, domain=-4:-1.96] {gauss(0,1)} \closedcycle;
+        \addplot [fill=magenta!20, draw=none, domain=-4:1.96] {gauss(0,1)} \closedcycle;
+        \addplot [very thick,cyan!50!black] {gauss(0,1)};
+        \node[circle,fill=blue,scale=0.25,pin=270:{$\mu_0 - 1.96 \times \sfrac{\sigma}{\sqrt{n}}$}] at (axis cs:1.96,0) {};
+        %\node[circle,fill=blue,scale=0.25,pin=270:{$\mu_0 - 1.96 \times \sfrac{\sigma}{\sqrt{n}}$}] at (axis cs:-1.96,0) {};
+        %\draw (0,-0.001) node[black, below] {$\mu_0$};
+    \end{axis}
+    \end{tikzpicture}
+    \caption{If the true mean $\mu_A$ is less than $\mu_0$, we calculate power as the probability of observing a sample mean less than our ``cut-off value'' $\mu_0 - 1.96 \times \sfrac{\sigma}{\sqrt{n}}$, where $\alpha = 0.05$.}
+    \label{fig:priori2b}
+    \end{subfigure}
+    \\[1ex]
+    \begin{subfigure}[b]{0.45\linewidth}
+    \begin{tikzpicture}
+    \begin{axis}[no markers, domain=-4:4, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=3.5cm, width=\linewidth, xtick={0}, xticklabels={$\mu_A$}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major]
+        \addplot [fill=magenta!20, draw=none, domain=-1.645:4] {gauss(0,1)} \closedcycle;
+        \addplot [very thick,cyan!50!black] {gauss(0,1)};
+        \node[circle,fill=blue,scale=0.25,pin=270:{$\mu_0 + 1.645 \times \sfrac{\sigma}{\sqrt{n}}$}] at (axis cs:-1.645,0) {};
+        %\draw (0,-0.001) node[black, below] {$\mu_0$};
+    \end{axis}
+    \end{tikzpicture}
+    \caption{For a right-tailed hypothesis test, we calculate statistical power as the probability of observing a sample mean greater than our ``cut-off value'' $\mu_0 + 1.645 \times \sfrac{\sigma}{\sqrt{n}}$, where $\alpha = 0.05$.}
+    \label{fig:priori2c}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.45\linewidth}
+    \begin{tikzpicture}
+    \begin{axis}[no markers, domain=-4:4, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=3.5cm, width=\linewidth, xtick={0}, xticklabels={$\mu_A$}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major]
+        \addplot [fill=magenta!20, draw=none, domain=-4:1.645] {gauss(0,1)} \closedcycle;
+        \addplot [very thick,cyan!50!black] {gauss(0,1)};
+        \node[circle,fill=blue,scale=0.25,pin={270:{$\mu_0 - 1.645 \times \sfrac{\sigma}{\sqrt{n}}$}}] at (axis cs:1.645,0) {};
+        %\draw (0,-0.001) node[black, below] {$\mu_0$};
+    \end{axis}
+    \end{tikzpicture}
+    \caption{For a left-tailed hypothesis test, we calculate statistical power as the probability of observing a sample mean less than our ``cut-off value'' $\mu_0 - 1.645 \times \sfrac{\sigma}{\sqrt{n}}$, where $\alpha = 0.05$.}
+    \label{fig:priori2d}
+    \end{subfigure}
+\caption{When the true mean of the population is $\mu=\mu_A$, unequal to $\mu_0$, we can calculate the statistical power based on the ``cut-off values'' proposed by $\mu_0$ given in \Cref{fig:priori1}.}
+\label{fig:priori2}
+\end{figure}
+\FloatBarrier
+\clearpage
+So, if we are to finalise all of these ideas together (visually):
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{\linewidth}
+    \begin{tikzpicture}
+    \begin{axis}[no markers, domain=-7:4, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=5cm, width=\linewidth, xtick={-3, 0}, xticklabels={$\mu_A$, $\mu_0$}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major]
+        \addplot [fill=magenta!20, draw=none, domain=-7:-1.96] {gauss(-3,1)} \closedcycle;
+        \addplot [fill=blue!5, draw=none, domain=-1.96:0] {gauss(-3,1)} \closedcycle;
+        \addplot [fill=green!5, draw=none, domain=-3:-1.96] {gauss(0,1)} \closedcycle;
+        \addplot [very thick,cyan!50!black] {gauss(0,1)};
+        \addplot [very thick,cyan!50!black] {gauss(-3,1)};
+        \node[circle,fill=blue,scale=0.25,pin=270:{$\mu_0 - z^*_{1 - \alpha/2} \times \sfrac{\sigma}{\sqrt{n}}$}] at (axis cs:-1.96,0) {};
+        \node[circle, fill=red, above, scale=0.8] at (axis cs:-3.5,.1) {$\alpha \downarrow$};
+        \draw[|-latex, below] (axis cs:-1.96,.1) -- (axis cs:0.08,.1);
+        \node[circle, fill=green!60!white, above, scale=0.8] at (axis cs:-0.42,.1) {$\alpha \uparrow$};
+        \draw[|-latex, below] (axis cs:-1.96,.1) -- (axis cs:-4,.1);
+        \node[above] at (axis cs:-1.5,0) {$\beta$};
+        \node[above left, scale=0.9] at (axis cs:-1.96,0) {$\alpha$};
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Left-tailed power calculation ($\mu_A<\mu_0$). The red shaded area is the probability of observing a sample mean less than $\mu_0 - z^*_{1 - \alpha/2} \times \sfrac{\sigma}{\sqrt{n}}$ conditional on $\mu=\mu_A$. The blue shaded area is $\beta$ and the green shaded area is $\alpha$. The use of the critical value $z^*_{1 - \alpha/2}$ v.s. $z^*_{1 - \alpha}$ depends on whether the null hypothesis is two- or one-sided.}
+    \label{fig:priori3a}
+    \end{subfigure} 
+    \\[1ex]
+    \begin{subfigure}[b]{\linewidth}
+    \begin{tikzpicture}
+    \begin{axis}[no markers, domain=-4:7, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=5cm, width=\linewidth, xtick={0,3}, xticklabels={$\mu_0$, $\mu_A$}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major]
+        \addplot [fill=magenta!20, draw=none, domain=1.96:7] {gauss(3,1)} \closedcycle;
+        \addplot [fill=blue!5, draw=none, domain=0:1.96] {gauss(3,1)} \closedcycle;
+        \addplot [fill=green!5, draw=none, domain=1.96:3] {gauss(0,1)} \closedcycle;
+        \addplot [very thick,cyan!50!black] {gauss(0,1)};
+        \addplot [very thick,cyan!50!black] {gauss(3,1)};
+        \node[circle,fill=blue,scale=0.25,pin=270:{$\mu_0 + z^*_{1 - \alpha/2} \times \sfrac{\sigma}{\sqrt{n}}$}] at (axis cs:1.96,0) {};
+        \node[circle, fill=red, above, scale=0.8] at (axis cs:3.5,.1) {$\alpha \downarrow$};
+        \draw[|-latex, below] (axis cs:1.96,.1) -- (axis cs:4,.1);
+        \node[circle, fill=green!60!white, above, scale=0.8] at (axis cs:0.42,.1) {$\alpha \uparrow$};
+        \draw[|-latex, below] (axis cs:1.96,.1) -- (axis cs:-0.08,.1);
+        \node[above] at (axis cs:1.5,0) {$\beta$};
+        \node[above right, scale=0.9] at (axis cs:1.96,0) {$\alpha$};
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Right-tailed power calculation ($\mu_A>\mu_0$). The red shaded area is the probability of observing a sample mean more than $\mu_0 + z^*_{1 - \alpha/2} \times \sfrac{\sigma}{\sqrt{n}}$ conditional on $\mu=\mu_A$. The blue shaded area is $\beta$ and the green shaded area is $\alpha$. The use of the critical value $z^*_{1 - \alpha/2}$ v.s. $z^*_{1 - \alpha}$ depends on whether the null hypothesis is two- or one-sided.}
+    \label{fig:priori3b}
+    \end{subfigure}
+    \caption{Power calculation for $\mu_A<\mu_0$ and $\mu_A>\mu_0$ when the population variance is known ($z$-test). If $\alpha$ is decreased, then the critical value $z^*_{1 - \alpha/2}$ (or $z^*_{1 - \alpha}$, if $H_0$ is one-sided) becomes larger which is visually shown by the red shaded area becoming smaller (smaller power). If $\alpha$ is increased, then the critical value $z^*_{1 - \alpha/2}$ (or $z^*_{1 - \alpha}$, if $H_0$ is one-sided) becomes smaller which is visually shown by the red shaded area becoming larger (larger power).}
+    \label{fig:priori3}
+\end{figure}
+\FloatBarrier
+

@@ -1,0 +1,263 @@
+\clearpage
+\phantomsection
+\section*{Week 1}
+\addcontentsline{toc}{section}{Week 1}
+
+\phantomsection
+\subsection*{Power}
+\addcontentsline{toc}{subsection}{Power}
+It can be difficult to understand statistical power, but essentially it is how well your test works. You, as a psychologist/statistician, want to ensure that you only make \textbf{necessary} changes to society and do so at the right time. The impact of the changes you make, or the affect to society, can be immense which is why you might choose a low significance level, such as 0.05. This says that, if the data you collect is representative of the population (large $n$) and it tells a different story to what you already know (null hypothesis), then you should change your mind (reject $H_0$). What you assumed cannot be true, so you must believe the data (accept $H_a$). You are able to conclude that your assumption has been contradicted, because the sample representing the population is clustered around another number (the mean is different to what you assumed) and the potential for that to happen (probability $p$-value) is extremely low, and in fact is lower than what you prescribe as an acceptable margin for deviation within the population ($\alpha$). \\
+Consider the first homework question from week 1 (\Cref{fig:hw1q1c}), where $H_0$ is that $\mu_{\Bar{X}} = \mu_{\Bar{Y}}$ and $H_a$ is that $\mu_{\Bar{Y}} < \mu_{\Bar{X}}$ (one-sided). We already found that the $p$-value for this hypothesis test was $0.0041$, but what is the ``cut-off score'', i.e. from what value do we consider rejecting $H_0$?
+\begin{align}
+    z = \frac{\brac{\Bar{X} - \Bar{Y}} - \brac{\mu_{\bar{X}} - \mu_{\Bar{Y}}}}{\sigma / \sqrt{n}} &> z^*_{1 - \alpha} 
+    \intertext{For $\alpha = 0.05$, our one-sided critical $z$-value is $1.645$, and under our null hypothesis $\mu_{\bar{X}} - \mu_{\Bar{Y}} = 0$. After inputting $\sigma$ and $n$ into the equation, we yield:}
+    \frac{\Bar{X} - \Bar{Y}}{9 / \sqrt{23}} &> 1.645 \\
+    \implies \Bar{X} - \Bar{Y} &> 1.645 \times \frac{9}{\sqrt{23}} \approx 3.087.
+    \intertext{This says that, if the difference between $\Bar{X}$ and $\Bar{Y}$ is more than 3, then we reject $H_0$. In our sample, the difference we found was 7, which is more than 3 so we rejected $H_0$. Suppose that a very large research institute was able to collate samples of the same test from all over the world, and concluded that the true mean of the population is in fact 5 (the experimental group performs worse, on average, by 5 points than the control group). How powerful was your test? If the test you conduct is ``powerful'' it means that you found a statistic which was relevant to the population, i.e. the sample mean will be calculated correctly (rejecting $H_0$) in a high percentage of times. }
+    \text{Power } &= 1 - \beta = \given{\text{reject } H_0}{H_0\text{ is false}} \\
+    &= \given{\Bar{X} - \Bar{Y} > 3.087}{\mu_{\bar{X} - \bar{Y}} = 5} \\
+    &= \pr{\frac{\brac{\Bar{X} - \Bar{Y}} - 5}{9 / \sqrt{23}} > \frac{3.087 - 5}{9 / \sqrt{23}} } \\
+    &= \pr{Z > -1.02} \\
+    &= 0.8459.
+\end{align}
+So, given that we know the standard deviation in the population to be 9 and prescribed $\alpha = 0.05$, in samples of size 23 we will correctly reject the null hypothesis 84.6\% of the time. This can be seen graphically in \Cref{fig:power1}: the graph of the distribution of $\bar{X} - \bar{Y}$ is translated from centering around the hypothesised mean of zero, to centering around the true mean. We have decided that if the sample statistic $\bar{x} - \bar{y}$ is outside of the 95\% of cases, then it is significantly different to the hypothesised case - significant because it changes our mind.
+\FloatBarrier
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[no markers, domain=-8:13, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=5cm, width=12cm, xtick={0,3.0870559001149918614500030669534,5}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major]
+        \addplot [fill=magenta!20, draw=none, domain=3.0870559001149918614500030669534:13] {gauss(5,1.876629726513672864103345329455)} \closedcycle;
+        \addplot [very thick,cyan!50!black] {gauss(0,1.876629726513672864103345329455)};
+        \addplot [very thick,cyan!50!black] {gauss(5,1.876629726513672864103345329455)};
+        %\addplot [very thick,magenta!50!black] {gauss(52.5,3.75325945303)};
+        \draw (-4.8,.15) node[cyan!50!black] {$\bar{X} - \Bar{Y} \sim \N \brac{0,\sfrac{81}{23}}$};
+        \draw (12,.15) node[cyan!50!black] {$\bar{X} - \Bar{Y} \sim \N \brac{5,\sfrac{81}{23}}$};
+        %\draw (60,.17) node[cyan!50!black] {$\Bar{X} \sim \N \brac{56,\sfrac{81}{23}}$};
+        %\draw (52.5,.13) node[magenta!50!black] {$\Bar{X} - \bar{Y}$};
+    \end{axis}
+    \end{tikzpicture}
+    \caption{This graph shows the distribution of the difference in means from the experiment laid out in question 1 of homework 1. In a sample of size 23, we correctly assume that the experimental group has lower test scores than the control group if the difference in sample means is more than 3 at a 5\% significance level. If the true population has a mean of 5 points, then this correct assumption will be reached in 84.6\% of tests.}
+    \label{fig:power1}
+\end{figure}
+\FloatBarrier
+Notice that this value depends on three significant factors: the sample size $n$, the hypothesised $\mu_0$ and actual mean $\mu$, and the significance level $\alpha$. What happens if we change the sample size? For a sample of size 23, the standard error of the sampling distribution of the mean is $9/\sqrt{23} \approx 1.8766$ which decreases as the sample size increases. For a sample of size 50, the standard error is $9/\sqrt{50} \approx 1.2728$ meaning that we reject $H_0$ when $\bar{X} - \bar{Y} > 1.645 \times 1.2728 \approx 2.094$ which is smaller than the cut-off value of 3.087 when our sample size was 23. So, as $n$ increases, the cut-off value also decreases (due to the decrease in the SE) which can be seen in \Cref{fig:power2}. 
+\FloatBarrier
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[no markers, domain=0:5, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=7cm, width=16.8cm, xtick={0,3.0870559001149918614500030669534, 2.09374319, 1.70953414, 1.4805}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major, legend entries={$n=23$, $n=50$, $n=75$, $n=100$}]
+        \addplot [thick,cyan!50!black, fill=cyan!20, draw=none, domain=3.0870559001149918614500030669534:5] {gauss(0,1.876629726513672864103345329455)} \closedcycle;
+        \addplot [thick,magenta!50!black, fill=magenta!20, draw=none, domain=2.09374319:5] {gauss(0,1.27279221)} \closedcycle;
+        \addplot [thick,green!50!black, fill=green!20, draw=none, domain=1.70953414:5] {gauss(0,1.03923048)} \closedcycle;
+        \addplot [thick,red!50!black, fill=red!20, draw=none, domain=1.4805:5] {gauss(0,0.9)} \closedcycle;
+        \addplot [very thick,cyan!50!black] {gauss(0,1.876629726513672864103345329455)};
+        \addplot [very thick,magenta!50!black] {gauss(0,1.27279221)};
+        \addplot [very thick,green!50!black] {gauss(0,1.03923048)};
+        \addplot [very thick,red!50!black] {gauss(0,0.9)};
+    \end{axis}
+    \end{tikzpicture}
+    \caption{This graph shows the cut-off values of 3.09 ($n=23$), 2.09 ($n=50$), 1.71 ($n=75$), and 1.48 ($n=100$) for a fixed significance level ($z^*_{1 - \alpha} = 1.645$; $\alpha = 0.05$) for a normally distributed random variable ($\bar{X} - \bar{Y}$) with mean zero and standard deviation $9/\sqrt{n}$. The shaded area under the graph represents the top 5\% of each of the distributions (so the area is the same), however the value for which the top 5\% is taken from is changing. }
+    \label{fig:power2}
+\end{figure}
+\FloatBarrier
+But how does increasing sample size impact our power? We have seen in \Cref{fig:power2} that the cut-off value is decreasing which means that,
+\begin{align}
+    \text{Power } &= 1 - \beta \\
+    &= \given{\text{reject } H_0}{H_0\text{ is false}} 
+    \shortintertext{Recall from above that the true population mean is 5, and not zero.}
+    &= \pr{\left. \Bar{X} - \Bar{Y} > \underbrace{1.645 \times \frac{9}{\sqrt{n}}}_{= 14.805/ \sqrt{n}} \right| \mu_{\bar{X} - \bar{Y}} = 5} \\
+    &= \pr{\frac{\brac{\Bar{X} - \Bar{Y}} - 5}{9 / \sqrt{n}} > \frac{14.805/\sqrt{n} - 5}{9 / \sqrt{n}} } \\
+    &= \pr{Z > 1.645 - \frac{5}{9\sqrt{n}}} \\
+    &= \begin{dcases}
+    \pr{Z > -2.28} \approx 0.9887, & n=50; \\
+    \pr{Z > -3.17} \approx 0.9992, & n=75; \\
+    \pr{Z > -3.91} \approx 1, & n=100. 
+    \end{dcases}
+\end{align}
+So, as $n$ increases so does the power of our test, which is shown in \Cref{fig:power3}.
+\FloatBarrier
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[no markers, domain=-1:6, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=3cm, width=7.2cm, xtick={0,3.0870559001149918614500030669534,5}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major]
+        \addplot [fill=magenta!20, draw=none, domain=3.0870559001149918614500030669534:6] {gauss(5,1.876629726513672864103345329455)} \closedcycle;
+        \addplot [very thick,cyan!50!black] {gauss(0,1.876629726513672864103345329455)};
+        \addplot [very thick,cyan!50!black] {gauss(5,1.876629726513672864103345329455)};
+        \draw (0,.145) node[black] {$n=23$};
+    \end{axis}
+    \end{tikzpicture}
+    %%%%%%
+    \begin{tikzpicture}
+    \begin{axis}[no markers, domain=-1:6, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=3cm, width=7.2cm, xtick={0,2.09374319,5}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major]
+        \addplot [fill=magenta!20, draw=none, domain=2.09374319:6] {gauss(5,1.27279221)} \closedcycle;
+        \addplot [very thick,cyan!50!black] {gauss(0,1.27279221)};
+        \addplot [very thick,cyan!50!black] {gauss(5,1.27279221)};
+        \draw (0,.16) node[black] {$n=50$};
+    \end{axis}
+    \end{tikzpicture}
+    %%%%%%
+    \begin{tikzpicture}
+    \begin{axis}[no markers, domain=-1:6, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=3cm, width=7.2cm, xtick={0,1.70953415,5}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major]
+        \addplot [fill=magenta!20, draw=none, domain=1.70953415:6] {gauss(5,1.03923048)} \closedcycle;
+        \addplot [very thick,cyan!50!black] {gauss(0,1.03923048)};
+        \addplot [very thick,cyan!50!black] {gauss(5,1.03923048)};
+        \draw (0,.18) node[black] {$n=75$};
+    \end{axis}
+    \end{tikzpicture}
+    %%%%%%
+    \begin{tikzpicture}
+    \begin{axis}[no markers, domain=-1:6, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=3cm, width=7.2cm, xtick={0,1.4805,5}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major]
+        \addplot [fill=magenta!20, draw=none, domain=1.4805:6] {gauss(5,.9)} \closedcycle;
+        \addplot [very thick,cyan!50!black] {gauss(0,.9)};
+        \addplot [very thick,cyan!50!black] {gauss(5,.9)};
+        \draw (0,.2) node[black] {$n=100$};
+    \end{axis}
+    \end{tikzpicture}
+    \caption{The shaded area represents the power of the test for increasing values of $n$, where the random variable $\bar{X} - \bar{Y}$ is distributed normally with standard error $9/\sqrt{n}$ ($\alpha = 0.05$; $H_0:$ $\mu=0$; $H_a: $ $\mu>0$; true mean $\mu=5$).}
+    \label{fig:power3}
+\end{figure}
+\FloatBarrier
+
+\phantomsection
+\subsection*{Confidence intervals}
+\addcontentsline{toc}{subsection}{Confidence Intervals}
+A confidence interval is the proposed range of a population parameter to a certain percentage of accuracy given a sample and associated statistic/s. 
+\[
+\text{confidence interval} = \text{estimate} \pm \text{margin of error}.
+\]
+We construct confidence intervals to approximate the location of the true population parameter, and we use the parameter estimate from a sample to do so. In the case of a CI for the population mean $\mu$, and we have the population standard deviation $\sigma$:
+\begin{align}
+    100 \times \brac{1 - \alpha}\text{\% CI for $\mu$:} \quad \bar{x} \pm z_{1 - \sfrac{\alpha}{2}}^* \times \frac{\sigma}{\sqrt{n}}.
+\end{align}
+Where $\bar{x}$ is the mean of a sample taken from the population of size $n$. We suppose that, if a large number of samples are taken from the same population, with mean $\mu$ and standard deviation $\sigma$, we can deduce that the mean of every sample is distributed normally with the same mean but with a scaled standard deviation. We call this the \textbf{sampling distribution of the mean}, and it is written formally as $\Bar{X}\sim \N \brac{\mu, \sigma^2/n}$. So, what this confidence interval says is that, in $100 \times \brac{1 - \alpha}\%$ of cases the population mean $\mu$ is equal to the estimate $\bar{x}$ with a margin of error equal to the standard normal deviation $z^*_{1 - \sfrac{\alpha}{2}} $ for $100 \times \brac{1 - \alpha}\%$ level multiplied by the standard error of the estimate $\sigma/\sqrt{n}$. Multiplying the critical $z$-value by the standard error transforms the margin of error from the standard normal to our distribution, so that the result is a margin of error for the sampling distribution of the mean. \\
+Where does this come from? The Central Limit Theorem states that for a random variable $X$ with standard deviation $\sigma$, 95\% of sample means collected with size $n$ will lie within 1.96 standard deviations of the mean:
+\begin{gather}
+    \pr{\mu - 1.96 \times \frac{\sigma}{\sqrt{n}}< \Bar{X}< \mu + 1.96 \times \frac{\sigma}{\sqrt{n}}} \approx 0.9500.
+    \shortintertext{We can rearrange the above equation to solve for $\mu$:}
+    \implies \pr{\Bar{X} - 1.96 \times \frac{\sigma}{\sqrt{n}}< \mu< \Bar{X} + 1.96 \times \frac{\sigma}{\sqrt{n}}} \approx 0.9500.
+    \intertext{So, in 95\% of cases the population mean is within 1.96 standard deviations of the sample mean. There is a general formula for $100 \times \brac{1 - \alpha}\%$:}
+    \implies \pr{\Bar{X} - z^*_{1 - \sfrac{\alpha}{2}} \times \frac{\sigma}{\sqrt{n}}< \mu< \Bar{X} + z^*_{1 - \sfrac{\alpha}{2}} \times \frac{\sigma}{\sqrt{n}}} \approx 1 - \alpha.
+\end{gather}
+\clearpage
+The following figure represents the confidence interval graphically (for a particular distribution):
+\FloatBarrier
+\begin{figure}[h]
+    \centering
+\begin{tikzpicture}
+\begin{axis}[no markers, domain=39:67, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=5.833cm, width=14cm, xtick={45.256,48,50.744,53}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major, legend entries = {$X \sim \N \brac{53,7^2}$, $\Bar{X}\sim \N \brac{53,1.4^2}$}]
+    %\draw (7,.13) node[magenta!50!black] {$\Bar{X} - \bar{Y}\sim \N \brac{56,\sfrac{81}{23}}$};
+    \addplot [very thick,cyan!50!black] {gauss(53,7)};
+    \addplot [very thick,magenta!50!black] {gauss(53,1.4)};
+    \addplot [dashed, magenta!50!black] {gauss(48,1.4)};
+    \addplot [fill=magenta!20, draw=none, domain=45.25:50.744] {gauss(48,1.4)} \closedcycle;
+    \addplot [dashed, black] {gauss(48,1)};
+\end{axis}
+\end{tikzpicture}
+\caption{In \href{hw2q1}{question 1 of Homework 2}, the population is distributed normally with mean 53 and standard deviation 7. A sample of 25 is taken, and a mean of 48 is computed from the sample which is useful in constructing a 95\% confidence interval, where the margin of error is $1.96 \times 1.4 = 2.744$. The confidence interval is shaded pink, and the pink dash line is the sampling distribution of the mean centred at 48. The sampling distribution of the mean of $X$ is distributed normally with a mean of 53 and standard deviation of $\sigma/\sqrt{n} = 7/5 = 1.4$ for a sample size of 25. The black dashed line represents the standard normal distribution centred at 48.}
+\label{fig:CI1}
+\end{figure}
+\FloatBarrier
+Essentially, you take a standard normal graph of $Z \sim \N \brac{0,1}$ and centre it at your sample mean $\bar{x}$. Next, you pull up to narrow the shape of the bell curve if $\sigma/\sqrt{n}<1$, or push down to widen the shape of the bell curve if $\sigma/\sqrt{n}>1$. So, the values that normally represent the middle 95\% of a standard normal distribution ($z = \pm 1.96$) have been moved so that the middle 95\% of our sampling distribution of the mean (centred at $\bar{x}$) is covered. \\
+In \Cref{fig:CI1}, the hypothesised mean $\mu_0=53$ is not contained in the 95\% CI centred at the sample mean of 48. This allows us to conclude that the true population mean is not 53, as we presume that $\bar{X}$ is an unbiased estimator of $\mu$, and has a standard error of $\sigma/\sqrt{n}$ which reduces as the sample size increases. We hypothesised that the true mean was 53, but we allow that we can be wrong and in fact prescribe a level of significance $\alpha$ to define when we are wrong. So if the hypothesised mean is outside of the CI, we accept that the observed mean is a better estimate of $\mu$ than $\mu_0$ is and deduce that $\mu$ is within this CI 95\% of the time. \textbf{It is really important to remember that $\mu$ is fixed in the population, but $\bar{x}$ can change and what we are really saying here is that in 95\% of samples the true mean lies within 1.96 standard deviations of $\bar{x}$.} The other 5\% of samples have CI's which do not contain the true population parameter, however you have decided that 5\% is not that bad and also is the highest percentage of inaccuracy that you will accept. If we ensured that our sample size $n$ was at least as big as the variance $\sigma^2$ of the population of $X$, then $\bar{X}$ would estimate $\mu$ with a standard error no more than 1 ($n \geq \sigma^2 \implies \sigma/\sqrt{n} \leq 1 $). 
+
+%\subsection{Associating distributions (of random variables)}
+\phantomsection
+\subsection*{Variance and standard deviation}
+\addcontentsline{toc}{subsection}{Variance and standard deviation}
+Consider a random variable $X$ with mean $\mu$. Imagine you plotted on a graph all of the values of this random variable, then you drew a square:
+
+This square represents the squared distance from that value of $X$ to $\mu$. Next, you add up all of your squares and divide it by the total number of squares that you have (take the average of the squares). What results is the \textbf{population variance $\sigma^2$} - it's the average squared distance between the values of $X$ and the mean $\mu$. If you don't want the squared distance and only want to know the absolute distance (shortest path from value $X$ to $\mu$), you can take the squared root of the variance and produce the \textbf{standard deviation $\sigma$} - the average straight-line distance between the values of $X$ and the mean $\mu$. It is quite impossible to do this for an entire population, as we assume that the population size is infinite and uncountable. We can estimate the population variance using a sample collected from the population. Instead of dividing by $n$ (the total number of values of $X$ present in the sample), we divide by $n-1$ as this ensures that it remains an unbiased estimator of $\sigma^2$. 
+\begin{align}
+    \E \brac{\frac{\sum_{i=1}^n \brac{x_i - \bar{x}}^2}{n}} &= \brac{\frac{n-1}{n}} \times \sigma^2 
+    \shortintertext{In order for an estimator to be unbiased, it's expected value must be equal to the parameter it estimates. In this case, it is not equal to $\sigma^2$.}
+    \implies \E \brac{\frac{\sum_{i=1}^n \brac{x_i - \bar{x}}^2}{n}} \times \brac{\frac{n}{n-1}} &= \sigma^2.
+    \shortintertext{We can rearrange so that}
+    \E \brac{s^2} = \E \brac{\frac{\sum_{i=1}^n \brac{x_i - \bar{x}}^2}{n-1}} &= \sigma^2.
+\end{align}
+Beaware that the sample standard deviation $s$ ($s = \sqrt{s^2}$) is \textbf{not} an unbiased estimator of the population standard deviation $\sigma$. This is because the square root function is \textbf{not} a linear function, and only linear functions are preserved under the expected value function:
+\begin{align}
+    \sqrt{\E \brac{s^2}} &\ne \E \brac{\sqrt{s^2}}.
+\end{align}
+Using $n-1.5$ in place of $n-1$ almost completely eliminates bias for estimating $\sigma$, and using $n$ in place of $n-1$ reduces the mean squared error. There are positive and negative effects associated with correcting for bias and we presume for the purposes of this course that $s$ is the best estimator of $\sigma$.
+\\
+It can sometimes be unclear which is the best choice, $s$ or $\sigma$, to use when analysing data of a random variable $X$. Recall the formulas:
+\begin{align}
+    s &= \sqrt{\frac{\sum_{i=1}^n \brac{x_i - \bar{x}}^2}{n-1}}; & \sigma &= \sqrt{\frac{\sum_{i=1}^n \brac{x_i - \mu}^2}{n}}; &\implies \text{SE} &= \frac{\sigma}{\sqrt{n}} \label{eq:unisd} \\
+    &&&&&= \sqrt{\frac{\sum_{i=1}^n \brac{x_i - \mu}^2}{n^2}} \\
+    &&&&&= \frac{\sqrt{\sum_{i=1}^n \brac{x_i - \mu}^2}}{n}.
+\end{align}
+The difference between the formulas is the denominator, which corrects for bias. In a sample, the individual values might be closer to the sample mean than they are to the population mean, and $\sum_{i=1}^n \brac{x_i - \bar{x}}^2$ might underestimate the actual sum of squares $\sum_{i=1}^n \brac{x_i - \mu}^2$. 
+\\
+The standard error shows how close your sample mean is to the population mean. Sample standard deviation shows how much individuals within the same sample differ from the sample mean. This also means that standard error should decrease if the sample size increases, as the estimate of the population mean improves. Sample standard deviation will be unaffected by changes in the sample size\footnote{You can also peruse the examples given here: \url{https://statistics.laerd.com/statistical-guides/measures-of-spread-standard-deviation.php}.}.
+\\${}$\\
+Previously we spoke only about estimating $\sigma$ for univariate data, and now we move on to bi- and multivariate data. If we collect two or more independent samples either from the same population or from different populations with (assumed) equal variance we can use pooled variance as an estimator for the population variance. If we cannot assume that the independent samples are taken from populations with equal or similar variances, then we use unpooled variance. Finally, if the two or more samples collected depend on each other in some manner, e.g. before and after therapy, then we are better off looking at the difference.
+\phantomsection
+\subsubsection*{Pooled variance}
+\addcontentsline{toc}{subsubsection}{Pooled variance}
+Consider a test between $I$ independent samples. Whilst we cannot assume that they are all from the same population (and hence have the same variance), the Central Limit Theorem allows us to conclude that the pooled variance converges to the true variance. To see how this works, and in order to better understand when and where to use pooled variance:
+\begin{align}
+    s_p^2 &= \frac{\sum_{i=1}^I \brac{n_i - 1} s_i^2}{\sum_{i=1}^I \brac{n_i - 1}}, \label{eq:bisp}
+    \shortintertext{where $I$ is the total number of groups.} 
+    &= \frac{\brac{n_1 - 1}s_1^2 + \brac{n_2 - 1}s_2^2 + \dots + \brac{n_I - 1}s_I^2}{\underbrace{\brac{n_1 - 1} + \brac{n_2 - 1} + \dots + \brac{n_I - 1}}_{n-I}}
+    \intertext{If we were to assume that one of the samples was a lot bigger than the others, suppose sample $k$ ($n_k>>n_i$ for every sample), then we can assume that the pooled variance will converge to $s_k^2$:}
+    &= \frac{\frac{n_1 - 1}{n_k-1}s_1^2 + \dots + {\color{red!60!black}s_k^2} + \dots + \frac{n_I - 1}{n_k-1}s_I^2}{\frac{n_1 - 1}{n_k-1} + \dots + \underbrace{\color{red!60!black}\frac{n_k-1}{n_k-1}}_{=1} + \dots + \frac{n_I - 1}{n_k-1}} \sim s_k^2.
+    \intertext{The reason for this has something to do with the ``power'' of having a large $n$; that the sample is reliably similar to the population (lower standard error). This is an important point in sample collection, because if all samples except one have a really small size (<30) but one sample is substantially larger (>100), then the statistician can more readily believe the results of the largest sample (due to CLT - recall formula for SE). If we have that all of the samples are nearly the same size (choose $n_k \approx n_1 \approx \dots \approx n_I$), then there is no dominating variance and we can assume the following:}
+    s_p^2 &\approx \frac{\brac{n_k - 1}s_1^2 + \brac{n_k - 1}s_2^2 + \dots + \brac{n_k - 1}s_I^2}{\brac{n_k - 1} + \brac{n_k - 1} + \dots + \brac{n_k - 1}} \\
+    &= \frac{\cancel{\brac{n_k - 1}} \times \brac{s_1^2 + s_2^2 + \dots + s_I^2}}{I \times \cancel{\brac{n_k - 1}}} \\
+    &= \frac{\sum_{i=1}^I s_i^2}{I} \\
+    &= \Bar{s}^2 ,
+    \intertext{which is the mean of the variances. This indicates that the pooled variances is the weighted average of variances, where the highest weight is given to the largest sample size. This is to ensure that our pooled variance is the best estimator of the population variance. Another way to look at this is to look at the fact that $s_i^2 = \sum_{j=1}^{n_i} \brac{y_{ij} - \Bar{y}_i}^2/\brac{n_i-1}$, where $j$ indexes the persons in a group.}
+    \implies s_p^2 &= \frac{\sum_{j=1}^{n_1} \brac{y_{1j} - \Bar{y}_1}^2 + \sum_{j=1}^{n_2} \brac{y_{2j} - \Bar{y}_2}^2 + \dots + \sum_{j=1}^{n_I} \brac{y_{Ij} - \Bar{y}_I}^2}{n-I} \\
+    &= \frac{\sum_{i=1}^I \sum_{j=1}^{n_i} \brac{y_{ij} - \Bar{y}_i}^2}{n-I} \\
+    &= \frac{\text{SSE}}{\text{df}_E} = MSE.
+\end{align}
+It is important to know when exactly to use pooled v.s. unpooled variance, but if we can \textbf{assume that the variances of the populations are equal}, i.e. $\sigma_1^2 = \sigma_2^2 = \dots = \sigma_I^2$, then we use pooled variance. \\
+For $I = 2$ (comparing two means), we can use the $t$ statistic to determine the results of our test:
+\begin{align}
+    t &= \frac{\Bar{y}_1 - \Bar{y}_2}{s_p \times \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}} \sim t \brac{\underbrace{n_1 + n_2}_{n} - 2} \\
+    \implies t^2 &= \frac{\brac{\Bar{y}_1 - \Bar{y}_2}^2}{s_p^2 \times \underbrace{\frac{n_1 + n_2}{n_1n_2}}_{\frac{1}{n_1} + \frac{1}{n_2}}} \\
+    &= \frac{\brac{\Bar{y}_1 - \Bar{y}_2}^2 / \brac{n_1 + n_2}}{s_p^2 \, / n_1 n_2}
+    \shortintertext{If $n_1 \approx n_2$}
+    \implies t^2 &\approx \frac{\frac{n}{2} \brac{\Bar{y}_1 - \Bar{y}_2}^2 }{s_p^2} \sim F \brac{1, n_1 + n_2 - 2}.
+\end{align}
+How do we know if the populations have equal variance if we only have sample information? A general \textbf{rule of thumb} is that the smallest sample standard deviation must no less than half of the larger sample standard deviation: 
+\begin{align}
+    \implies s_1 &\geq \frac{s_2}{2} >0.
+    \shortintertext{We can rearrange this to consider only the ratio of standard deviations:}
+    \implies 2 &\geq \frac{s_2}{s_1}.
+    \shortintertext{Further, we extend this to sample variance:}
+    \implies 4 &\geq \frac{s_2^2}{s_1^2}.
+\end{align}
+The more formal way of testing for equal variances is ANOVA, which is introduced in Stats 2.
+\phantomsection
+\subsubsection*{Unpooled variance}
+\addcontentsline{toc}{subsubsection}{Unpooled variance}
+If we cannot see from the data that the independent samples are drawn from the same population, or that the $I$ variances are similar, then we use unpooled variance. In general, we do not consider using this for $I>2$ (for comparing more than two means). It is mathematically possible, but in practice it is seldom used and certainly not a part of the scope of this course. The main reason being that the calculations required to determine the degrees of freedom is quite complicated (see \eqref{eq:1.2a}), and most psychologists use a computer. So, the \textbf{only time you use unpooled variance is when you have observable differences between the two groups}. So, you could note that $s_1^2>>s_2^2$ or perhaps the $n_i$ of each group is low (<30) and unequal; it is something you need to determine for yourself. For example, if your test was about two machines from different manufacturers and whether they can complete the same task in the same amount of time, then you would use unpooled variance. If you were exploring behavioural data two culturally different countries, you would use unpooled variances. \\
+\textbf{\underline{Rule of thumb:} if it's only two groups and you can assume/predict that the variances are unequal, use unpooled.}
+\begin{align}
+    s_{up} &= \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}. \label{eq:bisup}\\
+    \implies t &= \frac{\Bar{y}_1 - \Bar{y}_2}{s_{up}} \sim t (k), & \text{where } k &= \frac{\brac{n_1 - 1} \times \brac{n_2 - 1}}{\brac{n_2 - 1}\times C^2 + \brac{1-C}^2 \times \brac{n_1 - 1}} \label{eq:1.2a} \\
+    && \text{and } C &= \frac{s_1^2/n_1}{s_{up}^2}.
+\end{align}
+\textbf{N.B.:} if the sample sizes are equally large enough ($n_1 \approx n_2 = n$ and $n\geq 30$), then the formulae for standard error are equivalent, regardless of the homoskedasticity assumption.
+\begin{gather}
+    s_{up} = \sqrt{\frac{s_1^2 + s_2^2}{n}} = \sqrt{\frac{s_1^2 + s_2^2}{2}} \times \sqrt{\frac{2}{n}} = s_p \sqrt{\frac{1}{n} + \frac{1}{n}}. \label{eq:sepooled}
+\end{gather}
+\phantomsection
+\subsubsection*{Paired data}\label{paireddata}
+\addcontentsline{toc}{subsubsection}{Paired data}
+I don't think I need to refer much to this, however if you are testing whether there is any effect before and then after, consider this to be paired data. In that case, you don't use either pooled or unpooled variance, but look instead at the variance of differences. That is, transform your data from $x$ and $y$ to $d = x-y$, for instance.
+
+\begin{align}
+    \implies \bar{d} &= \frac{\sum_{i=1}^n d_i}{n} = \frac{\sum_{i=1}^n \brac{x_i - y_i}}{n} = \frac{\sum_{i=1}^n x_i}{n} - \frac{\sum_{i=1}^n y_i}{n} = \bar{x} - \bar{y}. \label{eq:meandiffbar} \\
+    s_d &= \sqrt{\frac{\sum_{i=1}^n \brac{d_i - \bar{d}}^2}{n}} \label{eq:meandiffsd} \\
+    &= \sqrt{\frac{\sum_{i=1}^n \sbrac{\brac{x_i - y_i} - \brac{\bar{x} - \bar{y}}}^2}{n-1}} 
+    \shortintertext{The next few lines are just some boring math relations:}
+    &= \sqrt{\frac{\sum_{i=1}^n \sbrac{\brac{x_i - \bar{x}} - \brac{y_i - \bar{y}}}^2}{n-1}} \\
+    &= \sqrt{\frac{\sum_{i=1}^n \sbrac{\brac{x_i - \bar{x}}^2 - 2 \brac{x_i - \bar{x}} \brac{y_i - \bar{y}} + \brac{y_i - \bar{y}}^2}}{n-1}} \\
+    &= \sqrt{\frac{\sum_{i=1}^n \brac{x_i - \bar{x}}^2}{n-1} - 2 \frac{\sum_{i=1}^n \brac{x_i - \bar{x}} \brac{y_i - \bar{y}}}{n-1} + \frac{\sum_{i=1}^n \brac{y_i - \bar{y}}^2}{n-1}} 
+    \shortintertext{This is the important part:}
+    &= \sqrt{s_x^2 - 2 \Cov{(x,y)} + s_y^2}
+\end{align}
+The $-2 \Cov{(x,y)}$ is very important!! Similar to conducting a $z$-test when the variables are dependent, if we want $\sigma_{X-Y}$ we calculate $\sqrt{\sigma_X^2 - 2 \Cov{(X,Y)} + \sigma_Y^2}$. Here we use $s^2$ to approximate $\sigma^2$, which is unknown. The standard error of the estimate $\bar{d}$ approximating $\mu_d$ is $s_d/\sqrt{n}$. 
+

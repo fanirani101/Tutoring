@@ -1,0 +1,149 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper, total={170mm,257mm}, left=20mm, top=20mm]{geometry}
+\usepackage[english]{babel}
+\newcommand\hmmax{0}
+\newcommand\bmmax{0}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{amsthm}
+\usepackage{amsmath, zref-savepos}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{thmtools}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{placeins}
+\usepackage{relsize}
+\usepackage{MnSymbol}
+\usepackage{nameref}
+\usepackage{hyperref}
+\usepackage{marvosym}
+\usepackage{lipsum}
+\usepackage{paralist}
+\usepackage{wasysym}
+\usepackage{multirow}
+\usepackage{auto-pst-pdf}
+\usepackage{ulem}
+\usepackage{minted}
+\usepackage{fancyref}
+\usepackage{xfrac}
+\usepackage[autostyle]{csquotes}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{bookmark} %faster updated bookmarks
+\usepackage{wrapfig}
+\usepackage{xfrac}
+\usepackage{mathtools}
+\usepackage{xcolor,cancel}
+\usepackage{centernot}
+\usepackage{enumitem}
+\usepackage{cleveref}
+\usepackage{lscape}
+\usepackage{longtable}
+\usepackage{nth}
+\usepackage{tikzsymbols}
+\usepackage{rotating}
+\usepackage[gen]{eurosym}
+\usepackage{hhline}
+
+%%%%%%%%%%%%%%%
+\restylefloat{figure}
+\newtheorem*{conthm}{Monotonic Sequence Theorem}
+\newcommand{\diff}{\mathrm{d}}
+\newcommand{\bd}{\mathrm{bd}\,}
+\newcommand{\cl}{\mathrm{cl}\,}
+\newcommand{\ext}{\mathrm{ext}\,}
+\newcommand{\intr}{\mathrm{int}\,}
+\newcommand{\vbrac}[1]{\left\vert #1\right\vert}
+\newcommand{\brac}[1]{\left( #1\right)}
+\newcommand{\cbrac}[1]{\left\{ #1\right\}}
+\newcommand{\sbrac}[1]{\left[ #1\right]}
+\newtheorem{solution}{Solution}
+\declaretheorem[name=Solution, refname={Solution,Solutions}, Refname={Solution,Solutions}, style=remark, unnumbered]{sol}
+\newcommand{\N}{\mathcal{N}}
+\DeclareMathOperator{\var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand{\cov}[1]{\Cov{\brac{#1}}}
+\DeclareMathOperator{\E}{\mathbb{E}}
+\DeclareMathOperator{\SE}{\mathbb{SE}}
+\DeclareMathOperator{\PP}{\mathbb{P}}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+\newcommand{\pr}[1]{\PP{\brac{#1}}}
+\newcommand{\given}[2]{\PP{\left( #1 \left| #2 \right) \right. }}
+\allowdisplaybreaks
+\renewcommand{\theequation}{\arabic{equation}}
+\newcommand\ind{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+\newcommand\Ccancel[2][black]{\renewcommand\CancelColor{\color{#1}}\cancel{#2}}
+%\numberwithin{equation}{subsection}
+
+%%%LISTS%%%
+\setlist[enumerate]{
+	align=left,
+    leftmargin=*,
+    itemindent=*, 
+    labelsep=*, 
+    labelwidth=*
+}
+\setlist[itemize]{
+	align=left,
+    leftmargin=*,
+    itemindent=*, 
+    labelsep=*, 
+    labelwidth=*
+}
+
+%%%PLOTS%%%
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{statistics}
+\usepgfplotslibrary{fillbetween}
+\pgfmathdeclarefunction{gauss}{2}{\pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}}
+%%%%%%%%%%%%%
+
+%%%DIAGONAL MATRICES%%%
+\newcommand{\diagentry}[1]{\mathmakebox[1.8em]{#1}}
+\newcommand{\xddots}{%
+  \raise 4pt \hbox {.}
+  \mkern 6mu
+  \raise 1pt \hbox {.}
+  \mkern 6mu
+  \raise -2pt \hbox {.}
+}
+%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%ROTATE IN TABLES%%%
+\newcommand{\STAB}[1]{\begin{tabular}{@{}c@{}}#1\end{tabular}}
+%%%%%%%%%%%%%%%%%%%%%%
+
+
+\title{Course summary}
+
+\author{Stephanie Ranft S2459825}
+
+\date{\parbox{\linewidth}{\centering%
+  \today\endgraf\bigskip
+  \textbf{Statistics 1B \\ PSBE1-09}}}
+\clearpage
+
+\begin{document}
+\maketitle
+\input{overview.tex}
+\input{wk1}
+\input{wk2}
+\input{wk3}
+\input{wk4}
+
+\phantomsection
+\section*{Homework}
+\addcontentsline{toc}{section}{Homework}
+\input{hw}
+\input{hw2}
+
+\end{document}

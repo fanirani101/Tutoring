@@ -1,0 +1,712 @@
+
+\subsection{Homework 1}
+\begin{enumerate}
+    \item In an experiment on the methods of teaching statistics, researchers studied the effects of taking a lab class. A random sample of 46 of Statistics 1A students was selected. Out of the 46 students, 23 were randomly assigned to an experimental group and the other 23 to a control group. The control group immediately started in week 1 with the lab class. In the experimental group, the lab class was postponed for 4 weeks. At the end of the semester both groups were evaluated on their knowledge of statistics. \\
+    Assume that in the population, the test scores of the control group are distributed as a Normal with mean $\mu_X = 56$ and standard deviation $\sigma = 9$. When the lab class is postponed, the population distribution is Normal with mean $\mu_Y = 49$ and standard deviation $\sigma = 9$. Thus, the experimental manipulation leads, on average, to lower test scores.
+    \begin{enumerate}
+        \item What is the sampling distribution of the mean score $\Bar{X}$ for students assigned to the control group?
+        \begin{framed}{\textbf{Solution}}
+            Refer to \S~4.5 (Agresti) on page 97, if $X \sim \N \brac{56,81}$, then $\Bar{X} \sim \N \brac{56, \sfrac{81}{23}}$ is the sampling distribution of the mean score for the students assigned to the control group.
+        \end{framed}
+        
+        \item What is the sampling distribution of the mean score $\Bar{Y}$ for students assigned to the experimental group?
+        \begin{framed}{\textbf{Solution}}
+            Similarly, if $Y \sim \N \brac{49,81}$ then $\Bar{Y} \sim \N \brac{49,\sfrac{81}{23}}$ is the sampling distribution of the mean score for the students assigned to the experimental group.
+        \end{framed}
+        
+        \item What is the sampling distribution of the difference $\bar{X} - \bar{Y}$ between the mean scores of both groups? Assume that $X$ and $Y$ are independent.
+        \FloatBarrier
+        \begin{figure}[h]
+            \centering
+        \begin{tikzpicture}
+        \begin{axis}[no markers, domain=42:63, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=5cm, width=12cm, xtick={49,56}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major]
+            \addplot [very thick,cyan!50!black] {gauss(49,1.87662972651)};
+            \addplot [very thick,cyan!50!black] {gauss(56,1.87662972651)};
+            \addplot [very thick,magenta!50!black] {gauss(52.5,3.75325945303)};
+            \draw (45,.17) node[cyan!50!black] {$\Bar{Y} \sim \N \brac{49,\sfrac{81}{23}}$};
+            \draw (60,.17) node[cyan!50!black] {$\Bar{X} \sim \N \brac{56,\sfrac{81}{23}}$};
+            \draw (52.5,.13) node[magenta!50!black] {$\Bar{X} - \bar{Y}$};
+        \end{axis}
+        \end{tikzpicture}
+        \caption{This graph shows the distributions from parts a and b of question 1 (homework 1), with the sampling distribution of the difference in scores overlaid. }
+        \label{fig:hw1q1c}
+        \end{figure}
+        \FloatBarrier
+        \begin{framed}{\textbf{Solution}}
+            You can see the sampling distributions of the control and experimental groups in \Cref{fig:hw1q1c} with the sampling distribution of the difference laid over the top. As both $\Bar{X}$ and $\bar{Y}$ are normal and independent, it is easy to relate the mean and standard deviation of their difference:
+            \begin{align}
+                \mu_{\bar{X} - \bar{Y}} &= \frac{\sum_{j=1}^n \brac{\bar{X}_i - \bar{Y}_i}}{n}  = \frac{\brac{\bar{X}_1 - \bar{Y}_1} + \dots \brac{\bar{X}_n - \bar{Y}_n}}{n} \\
+                &= \frac{\overbrace{\brac{56 - 49} + \dots \brac{56 - 49}}^{n \text{ times}}}{n} = \frac{n \times \brac{56-49}}{n} = 56-49 = 7.
+            \end{align}
+            Similarly, for the standard deviation (which we know is the square root of the variance):
+            \begin{align}
+                \sigma_{\bar{X} - \bar{Y}} &= \sqrt{\sigma_{\bar{X} - \bar{Y}}^2} 
+                \intertext{You can remember from 1A that if we have two normally distributed independent random variables, and there is a linear transformation (here the linear transformation is $V = \bar{X} - \bar{Y} = \bar{X} + \brac{\bar{Y}}$) then $\mu_V = \mu_{\bar{X}} - \mu_{\bar{Y}}$ and $\sigma^2_V = \sigma^2_{\bar{X}} + \sigma^2_{\bar{Y}}$.}
+                &= \sqrt{\sigma_{\bar{X}}^2 + \sigma_{\bar{Y}}^2} = \sqrt{2 \times \frac{81}{23}} = \sqrt{\frac{162}{23}} \\
+                &\approx \sqrt{7.0435} \approx 2.654.
+            \end{align}
+            So, the sampling distribution of the difference between the mean scores of both groups $\bar{X} - \bar{Y} \sim \N \brac{7, \sfrac{162}{23}}$. 
+        \end{framed}
+        
+        \item What is the chance that the experiment outlined above, with 23 students in each group, will determine that the mean in the experimental group is greater than the mean in the control group; that is, that the sample means will mislead us about the effectiveness of the lab classes?
+        \begin{framed}{\textbf{Solution}}
+        This question is a little long and wordy, however it is asking you to calculate the probability that $\bar{Y}>\bar{X}$, which is the same as calculating the probability that some random variable $V<0$ where $V = \bar{X} - \bar{Y}$. We can use the standard normal distribution and the $z$-table so solve this:
+        \begin{align}
+            \pr{\bar{X}<\bar{Y}} &= \given{V<0}{V = \bar{X} - \bar{Y} \sim \N \brac{7, \sfrac{162}{23}}} \\
+            &= \pr{\frac{V - \mu_V}{\sigma_V}< \frac{0 - \mu_V}{\sigma_V}} \\
+            &= \pr{Z < \frac{-7}{2.654}} \\
+            &= \pr{Z<-2.64}
+        \end{align}
+        Using Table A, we find that $\pr{Z<-2.64} = 0.0041$ which allows us to conclude that the experiment outlined above will determine that the mean in the experimental group is greater than the mean in the control group with an infinitesimally small chance ($<0.5\%$). This has been plotted in \Cref{fig:hw1q1d}.
+        \end{framed}
+        \FloatBarrier
+        \begin{figure}[h]
+            \centering
+        \begin{tikzpicture}
+        \begin{axis}[no markers, domain=-1:15, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=5cm, width=12cm, xtick={0,7}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major]
+            \draw (7,.13) node[magenta!50!black] {$\Bar{X} - \bar{Y}\sim \N \brac{56,\sfrac{81}{23}}$};
+            \addplot [fill=magenta!20, draw=none, domain=-1:0] {gauss(7,3.75325945303)} \closedcycle;
+            \addplot [very thick,magenta!50!black] {gauss(7,3.75325945303)};
+        \end{axis}
+        \end{tikzpicture}
+        \caption{This graph shows the sampling distribution of the difference in scores from parts a and b of question 1 (homework 1). The shaded area on the left (between the axis and zero) represents the probability that the difference is less than zero, which equates to approximately 0.41\%.}
+        \label{fig:hw1q1d}
+        \end{figure}
+        \FloatBarrier
+    \end{enumerate}
+    
+    \item A test to determine a person’s blood pressure is not completely accurate. Moreover, a person’s blood pressure varies from day to day. Assume that repeated measurements on different days for the same person are normally distributed with a standard deviation $\sigma = 5$. Assume that the measurements are independent.
+    \begin{enumerate}
+        \item Marja’s blood pressure (diastolic pressure) is measured once, with the result $X = 80$. Compute the 95\% confidence interval for her blood pressure.
+        \begin{framed}{\textbf{Solution}}
+        Here, we have that $n=1$ so our confidence interval will be subject to a lot of scrutiny, given the relatively large standard error for the sampling distribution of the mean of Marja's blood pressure. The mean of one sample is the value of the single sample taken, thus we have that $\bar{X} = 80$. Furthermore, the standard error is given by $\sfrac{\sigma}{\sqrt{n}} = 5$. We know from \S~5.3 that the general formula for a confidence interval is \textbf{estimate} $\pm$ \textbf{margin of error}, where the margin of error incorporates the following: if $\bar{X} \sim \N \brac{\mu, \sigma^2/n}$ then the margin of error is the critical value multiplied by the standard error of the estimate, which is $\sigma/\sqrt{n}$.
+        \begin{align}
+            \text{95\% CI for } \mu : \qquad \bar{x} \pm z^*_{1 - \sfrac{\alpha}{2}} \times \frac{\sigma}{\sqrt{n}} &= 80 \pm 1.96 \times 5 \\
+            &= \brac{70.2, 89.8}.
+        \end{align}
+        It is important to remember this general formula!!! If you wish to narrow the confidence interval (i.e. produce a better range to estimate the true parameter value), then the \textbf{best} way to do that is increase your sample size. The other way is to increase your alpha, which leads to a higher probability of Type I errors, so the former method is \textbf{better}.
+        \end{framed}
+        
+        \item Over the course of five days, daily measurements were taken of Marja’s blood pressure. The mean measurement is $\bar{X}= 80$. Compute the 95\%-confidence interval for Marja’s blood pressure. \\
+        Compare the two confidence intervals you computed. Which is smaller and why? What does a smaller confidence interval mean?
+        \begin{framed}{\textbf{Solution}}
+        Now we have that $n=5$, so our standard error is $\sigma/\sqrt{n} = 5/\sqrt{5} = \sqrt{5} \approx 2.236$. In part a the margin of error was $1.96 \times 5 = 9.8$, but now we have a new margin of error $1.96 \times \sqrt{5} \approx 4.383$. So, our new margin of error is less than half of our old margin of error, just because we collected an additional 4 samples! We can now compute the new CI:
+        \begin{align}
+            \textit{CI for } \mu : \qquad \bar{x} \pm z^*_{1 - \sfrac{\alpha}{2}} \times \frac{\sigma}{\sqrt{n}} &= 80 \pm 1.96 \times \sqrt{5} \\
+            &= \brac{75.6, 84.4}.
+        \end{align}
+        Notice that this confidence interval is narrower than the one we computed in part a? In part a, the CI had a range of 19.6, and in part b we have reduced the range to 8.8 (range of CI $= 2 \times $ margin of error). The reason that it is narrower is that we have reduced our margin of error. This tells us that we are 95\% confident that the true population mean of Marja's blood pressure lies between 75.6 and 84.4.
+        \end{framed}
+    \end{enumerate}
+    
+    \item A researcher is conducting a study on the price of lecture books for Psychology classes. A random sample is taken of 12 lecture books that are being used for the study Psychology. Prices (in \euro{}) are as follows:
+    \FloatBarrier
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{@{}llll@{}}
+    \toprule
+    53,95 & 54,50 & 99,00 & 69,00 \\
+    83,00 & 77,00 & 32,00 & 86,05 \\
+    86,05 & 79,00 & 52,50 & 69,89 \\ \bottomrule
+    \end{tabular}
+    \end{table}
+    \FloatBarrier
+    Assume that the price of a lecture book is normally distributed in the population and that the standard deviation ($\sigma_X$) in the population of all lecture books is known and equals \euro{20}.
+    %\clearpage
+    \begin{enumerate}
+        \item Compute $\sigma_{\bar{X}}$, the standard deviation of $\bar{X}$.
+        \begin{framed}{\textbf{Solution}}
+        We have a sample of size $n=12$ and the population standard deviation $\sigma_X = 20$, so the standard deviation for the sample mean is the standard error of the estimate, which is:
+        \begin{align}
+            \sigma_{\bar{X}} &= \frac{\sigma_X}{\sqrt{n}} = \frac{20}{\sqrt{12}} \approx \euro{5,77}.
+        \end{align}
+        \end{framed}
+        
+        \item Given the sample in the Table above, compute the 95\%-confidence interval for $\mu$, the mean of the population from which the sample was taken.
+        \begin{framed}{\textbf{Solution}}
+        Firstly, we use the sample to provide an estimate for $\mu$:
+        \begin{align}
+            \bar{x} &= \frac{\sum_{i=1}^{12} x_i}{12} \\
+            &= \frac{1}{12} \times \left(53,95 + 54,50 + 99,00 + 69,00 +83,00 + 77,00 \right. \\
+            &{} \qquad {} \qquad {} \qquad \left. + 32,00 + 86,05 +86,05 + 79,00 + 52,50 + 69,89 \right) \\
+            &= \frac{841.94}{12} = 70.161\bar{6} \approx \euro{70,16}
+        \end{align}
+        Now, we can compute the CI:
+        \begin{align}
+            \textit{95\% CI for } \mu : \qquad \bar{x} \pm z^*_{1 - \sfrac{\alpha}{2}} \times \frac{\sigma}{\sqrt{n}} &= \euro{70,16} \pm 1.96 \times \euro{5,77} \\
+            &= \brac{\euro{58,85}, \euro{81.47}}.
+        \end{align}
+        This CI tells us that the true population mean lies between \euro{58,85} and \euro{81.47} with 95\% certainty, based on the sample.
+        \end{framed}
+        
+        \item Do you think it is likely that the true mean price of the population of lecture books is less than \euro{90}?
+        \begin{framed}{\textbf{Solution}}
+        Referring back to our computed CI in part b, we can be confident that in 95\% of cases the true value does indeed lie below \euro{90} because it is not contained in the CI. Referring back to the previous question, we learnt that the only way to change the range of a CI is to alter the margin of error and the best way to do that is by altering the sample size. If we wished to ensure that \euro{90} was included in our CI, we would need to reduce our sample size to 3 (keeping $\bar{x}$ and $\alpha$ the same):
+        \begin{align}
+            90 &< 70,16 + 1.96 \times \frac{20}{\sqrt{n}} = \text{upper bound for 95\% CI} \\
+            \implies n &< \brac{\frac{1.96 \times 20}{\brac{90 - 70,16}}}^2 \approx 3.904.
+        \end{align}
+        \end{framed}
+        Now assume that we would rather report the price of the lecture books in US dollars instead of Euros; we know that 1 Euro equals 1.07 dollars. Use your answers to the previous questions in order to answer the following.
+        \item Compute the mean price in dollars for the lecture books.
+        \begin{framed}{\textbf{Solution}}
+        We must transform our random variable $X$ (EURO) to $Y$ (USD) using the following linear transformation $Y = 1.07 X$. This results in the following transformation for our sample mean:
+        \begin{align}
+            \bar{Y} &= \frac{\sum_{i=1}^{12} Y_i}{12} = \frac{\sum_{i=1}^{12} \brac{1.07 X_i}}{12} = 1.07 \times \frac{\sum_{i=1}^{12} X_i}{12} = 1.07 \times \bar{X} = 75.07298\bar{3} \approx \$ 75.07.
+        \end{align}
+        \end{framed}
+        
+        \item Compute the standard deviation of the mean price for the lecture books in dollars.
+        \begin{framed}{\textbf{Solution}}
+        Using the same linear transformation:
+        \begin{align}
+            \sigma_{\bar{Y}}^2 &= 1.07^2 \times \sigma_{\bar{X}}^2 = 38.16\bar{3}. \\
+            \implies \sigma_{\bar{Y}} &= \sqrt{38.16\bar{3}} \approx \$ 6.18
+        \end{align}
+        \end{framed}
+        
+        \item Compute the 95\%-confidence interval for the mean price in dollars for the lecture books in the population.
+        \begin{framed}{\textbf{Solution}}
+        \begin{align}
+            \textit{95\% CI for } \mu : \qquad \bar{x} \pm z^*_{1 - \sfrac{\alpha}{2}} \times \frac{\sigma}{\sqrt{n}} &= \$ 75.07 \pm 1.96 \times \$ 6.18 \\
+            &= \brac{\$ 62.96, \$ 87.18}.
+        \end{align}
+        This CI tells us that the true population mean lies between \$62.96 and \$87.18 with 95\% certainty, based on the sample.
+        \end{framed}
+        
+        \item Explain what the confidence interval computed in part f means. How would you explain this to someone who does not know what a confidence interval is?
+        \begin{framed}{\textbf{Solution}}
+        The confidence interval states that, based on a random sample of 12 books drawn from a population which deviates (on average) by \$21.04, the average cost of any particular Psychology lecture book lies between \$62.96 and \$87.18 in 95\% of cases. In layman's terms, you could tell a prospective Psychology student that they can expect to pay somewhere between \$62.96 and \$87.18 per book, however there is a 5\% chance that the cost could be more or less.
+        \end{framed}
+    \end{enumerate}
+    
+    \item A study on depression among twelve-year-old children is planned. The researchers want to compute the 90\%-confidence interval for the population mean score on a depression scale. They want the 90\% margin of error to be no bigger than 5 points. The standard deviation in the population is 12.
+    \begin{enumerate}
+        \item How large does the sample $N$ of twelve-year-old children need to be in order to yield a 90\% margin of error of less than 5 points?
+        \begin{framed}{\textbf{Solution}}
+        Recall that the margin of error in a confidence interval is based on three things: the prescribed acceptance level $\alpha$, the sample size $N$, and the standard deviation in the population $\sigma$.
+        \begin{align}
+            \text{margin of error } &= z^*_{1 - \sfrac{\alpha}{2}} \times \frac{\sigma}{\sqrt{N}}.
+            \shortintertext{If the margin of error must be less than 5 points, we have that }
+            5 &> z^*_{1 - \sfrac{\alpha}{2}} \times \frac{\sigma}{\sqrt{N}}. 
+            \shortintertext{If we now substitute $z^*_{1 - \sfrac{\alpha}{2}} = 1.645$ (for 90\%) and $\sigma = 12$, we can now rearrange to solve for $N$:}
+            5 &> 1.645 \times \frac{12}{\sqrt{N}} \\
+            \implies N &> \brac{\frac{1.645 \times 12}{5}}^2 = 15.586704.
+            \intertext{Recall that $N$ is an integer, so if $N\geq 16$, we can be sure that the 90\% margin of error is less than 5 points when the population standard deviation is 12. In general, to find the $N$ which limits the margin of error to a particular maximum we calculate }
+            N &> \brac{\frac{z^*_{1 - \sfrac{\alpha}{2}} \times \sigma}{\text{max margin of error}}}^2 \label{eq:hw1q4a}.
+        \end{align}
+        \end{framed}
+        
+        \item If they decided they wanted a 95\% margin of error, rather than a 90\%, to be no larger than 5 points, would they have to survey more participants or fewer? Why?
+        \begin{framed}{\textbf{Solution}}
+        If the margin of error is changed from 90\% to 95\%, what has been altered is the prescribed $\alpha$, i.e. it has decreased. If $\alpha$ decreases, then the critical value increases: $z^*_{1 - \sfrac{0.10}{2}} = 1.645 < 1.96 = z^*_{1 - \sfrac{0.05}{2}}$. Noting \eqref{eq:hw1q4a}, we can calculate the new required sample size: 
+        \begin{align}
+            N &> \brac{\frac{z^*_{1 - \sfrac{\alpha}{2}} \times \sigma}{\text{max margin of error}}}^2 \\
+            &= \brac{\frac{1.96 \times 12}{5}}^2 = 22.127616
+        \end{align}
+        Again, remembering that $N$ is an integer we conclude that the sample size must be 23 or more ($N\geq 23$) in order for the 95\% margin of error to remain less than 5 points, where the standard deviation in the population is 12.\\
+        If we did not increase the sample size when we changed our $\alpha$, the margin of error would be:
+        \begin{align}
+            \text{margin of error} &= 1.96 \times \frac{12}{\sqrt{16}} = 1.96 \times 3 = 5.88 >5.
+        \end{align}
+        \end{framed}
+    \end{enumerate}
+\end{enumerate}
+
+\subsection{Homework 2}
+\begin{enumerate}
+    \item \label{hw2q1}Researcher John is interested in the extent to which stress influences human memory. He has run a study in which a random sample of 25 participants has been told that they will be required to give a lecture in front of a large audience. Giving a speech in front of a large audience is considered a stressful event by many people. \\
+    While the participants were busy preparing for their presentation, they were asked to complete a memory task. It is known that in ``typical'' situations (without a lot of stress), the mean number of questions on the memory task is 53. The \textit{observed} mean number of correctly-answered questions for these 25 participants is $\Bar{X} = 48$. Assume that the standard deviation of memory scores in the population is 7. 
+    \\ 
+    The null hypothesis is that the manipulation did not affect the scores. The alternative hypothesis is that the true mean number of correctly answered questions is smaller than 53; that is, the stress of the preparation for the presentation hurts performance. The hypotheses may be written formally:
+    \[
+    \begin{matrix}
+        H_0 & : & \mu = 53 \\
+        H_A & : & \mu < 53 
+    \end{matrix}
+    \]
+    \begin{enumerate}
+        \item Carry out the test and give the $p$-value.
+        \begin{framed}{\textbf{Solution}}${}$\\
+        \textbf{First step: extract the important information!!!}
+        \begin{align}
+            X &\sim \brac{53, 49} 
+            \shortintertext{In the population, the mean is 53 with standard deviation 7 (variance $7^2 = 49$) - no assumptions about normality.}
+            n &= 25 \\
+            \bar{x} &= 48 
+            \shortintertext{A sample of size 25 is drawn from the population and the computed mean of the sample is 48.}
+            \bar{X} &\sim \N \brac{53, 1.96}
+        \end{align}
+        The sampling distribution of the mean of $X$ is normally distributed with mean 53 and standard error $7/\sqrt{n} = 7/5 = 1.4$ (variance $1.4^2 = 1.96$) - this conclusion is drawn thanks to the CLT (drawing on the LLN). \\
+        \textbf{Next step: find the $p$-value!} The $p$-value is the probability of observing the same, or more extreme, sample statistic in an any other sample collection of the same size. So, if we were to collect 100 million samples from this particular population, each of size 25, how likely is it that we would would observe a mean equal to or more extreme than 48. \textbf{Remember} that this probability is computed under the null hypothesis, so we are assuming that the population mean is 53. 
+        \begin{align}
+            p &= \text{probability of observing $\bar{x}\leq 48$,} \\
+            &{}\qquad \text{when we have assumed $\bar{X} \sim \brac{53,1.96}$} \\
+            &= \given{\bar{X}<48}{\mu_{\bar{X}}=53} \\
+            &= \pr{\frac{\bar{X} - 53}{\sqrt{1.96}} < \frac{48-53}{\sqrt{1.96}}} \\
+            &= \pr{Z < -3.57} \\
+            &<0.0003 \text{ according to table A.}
+        \end{align}
+        Given that the $p$-value is infinitesimally small, we can conclude that it is \textbf{extremely unlikely} (at \textbf{any} significance level) that we observe a mean of 48 in a population that we suppose has a mean of 53, when the standard error is 1.4. However, we \textbf{have} observed a mean of 48, so what we previously supposed \textbf{must be incorrect}; we reject $H_0$ in favour of $H_A$. It must be, that in the population, the mean number of correctly-answered questions under stress is less than 53.
+        \end{framed}
+        
+        \item Explain in words what the $p$ value means. The $p$ value is the probability that...
+        \begin{framed}{\textbf{Solution}}
+        See part a.
+        \end{framed}
+        
+        \item How strong is the evidence that, for this memory test, the mean number of correctly answered questions in stressful situations is smaller that the mean number of correctly answered questions in ``typical'' situation?
+        \begin{framed}{\textbf{Solution}}
+        See part a.
+        \end{framed}
+    \end{enumerate}
+    
+    \item Exercise 2 from week 3 (statistics 1A) describes a study by a psychologist interested in the relationship between children watching violent TV programs and displays of violent behavior by the children. Assume that the number of aggressive actions towards their friends in the population has a standard deviation of $\sigma=3$. A random sample has been taken of 18 young children, who watch a lot of violent TV-programs relative to their peers. In this sample, the mean number of aggressive actions towards their peers is $\bar{X}=4.5$.
+    \begin{enumerate}
+        \item Find the 95\%-confidence interval for the mean number of aggressive actions in the population of the sample of young children.
+        \begin{framed}{\textbf{Solution}}
+        The standard error of the sampling distribution of the mean of $X$ is $3/\sqrt{n}$, where $X$ is the number of aggressive actions and $n$ is the size of the sample taken from the population. In our case, we observe a mean of 4.5 in a sample of 18 children.
+        \begin{align}
+            \textit{95\% CI for } \mu : \qquad \bar{x} \pm z^*_{1 - \sfrac{\alpha}{2}} \times \frac{\sigma}{\sqrt{n}} &= 4.5 \pm 1.96 \times \frac{3}{\sqrt{18}} \\
+            &= \brac{3.11, 5.89}
+        \end{align}
+        \end{framed}
+        
+        \item Suppose it is known that in cases where no violent TV programs are watched, the mean number of aggressive actions towards their peers is $\mu = 3$. Determine $H_0$ and $H_A$, then conduct a test at $\alpha = 0.05$ in order to determine whether watching violent TV programs will lead to more aggressive actions by young children.
+        \begin{framed}{\textbf{Solution}}
+        In order to ensure a test that only makes \textbf{appropriate changes to society}, we assume that watching violent TV programs has no affect on the number of aggressive episodes; $H_0: \mu = 3$. Moreover, we wish to test against this hypothesis by saying that it will result in an increase of aggressive episodes; $H_A: \mu >3$. Now, we will find the $p$-value associated with this test: how probable is it to observe 4.5 or more violent episodes if we assume that the mean is 3.
+        \begin{align}
+            p &= \given{\bar{X}>4.5}{\mu_{\bar{X}}=3} \\
+            &= \pr{\frac{\bar{X} - 3}{3/\sqrt{18}} > \frac{4.5 - 3}{3/\sqrt{18}}} \\
+            &= \pr{Z> 2.12} 
+            \shortintertext{You can find the $p$-value for this $z$ using table A; it is equivalent to finding $\pr{Z<-2.12}$.}
+            &= 0.0170
+        \end{align}
+        \end{framed}
+        
+        \item On the basis of both the test and the confidence interval, discuss your conclusions about the research question.
+        \begin{framed}{\textbf{Solution}}
+        According to our observations, in 95\% of samples of size 18 (from the population) the true mean lies between 3.11 and 5.89, so we can not assume that the true mean is 3. 
+        \\
+        We have prescribed an $\alpha = 0.05>p$, so we reject $H_0$: the true mean in the population must be more than 3. Under the assumption that the mean is 3, we found that there is less than a 5\% chance of observing a mean of 4.5 or more in samples of size 18. Despite this low probability, we still observed a mean of 4.5 so we must conclude that the true mean is not 3, but must be more than 3. 
+        \end{framed}
+        
+        \item If you were reporting these results to another researcher, which would be more informative, the significance test or the confidence interval? Why?
+        \begin{framed}{\textbf{Solution}}
+        The confidence interval is the most informative, as it provides information about the true population parameter range to a certain level of confidence. Additionally, information about the strength and direction is given; a wide interval indicates a weak suggestion of the true parameter v.s. a narrow interval which gives a strong suggestion; if the hypothesised parameter lies in the interval, then we believe that this is the true value in the population (accept $H_0$). \\
+        The $p$-value tells us whether our findings are statistically noteworthy, but does not tell us where to find the true parameter value if it is indeed not what we supposed (if $p<\alpha$, then reject $H_0$ but we do not have $\mu$).
+        \end{framed}
+    \end{enumerate}
+    
+    \item Everyone that uses statistics must understand what the difference is between statistical significance and practical importance. With very large sample sizes, even very small effects can be found to be statistically significant. 
+    \\
+    Assume that a sleep therapy clinic has observed (during a number of years) that the time taken by adult men to fall asleep is normally distributed with a mean $\mu = 335$ seconds and a standard deviation of $\sigma = 15$ seconds. A reduction of 2 seconds in time taken (men fall asleep 2 seconds earlier) is of no practical use, but this unimportant change can be found to be highly statistically significant. Suppose there has been a study in which the goal was to determine if hypnotherapy was an effective way to make men fall asleep faster. A sample was taken of adult men, and each underwent hypnotherapy. After the hypnotherapy, the mean observed time taken to fall asleep was 333 seconds. Assume that the standard deviation in the population of times was still 15 seconds.
+    \\
+    Compute the $p$ value for the significance test in each of the following situations:
+    \begin{enumerate}
+        \item 25 male adults are given hypnotherapy, and the mean time taken to fall asleep is 333 seconds.
+        \begin{framed}{\textbf{Solution}}
+        We have that $n=25$ so the standard error is $\sigma/\sqrt{n} = 15/5=3$. 
+        \begin{align}
+            p &= \given{\bar{X}<333}{\mu_{\bar{X}} = 335} \\
+            &= \pr{\frac{\bar{X} - 335}{3} < \frac{333-335}{3}} \\
+            &= \pr{Z< -0.67} \\
+            &= 0.2514
+        \end{align}
+        Here we have that $p>\alpha$ at 5\% significance level, so we do not reject $H_0: \mu = 335$.
+        \end{framed}
+        
+        \item 100 male adults are given hypnotherapy, and the mean time taken to fall asleep is 333 seconds.
+        \begin{framed}{\textbf{Solution}}
+        We have that $n=100$ so the standard error is $\sigma/\sqrt{n} = 15/10=1.5$. 
+        \begin{align}
+            p &= \given{\bar{X}<333}{\mu_{\bar{X}} = 335} \\
+            &= \pr{\frac{\bar{X} - 335}{1.5} < \frac{333-335}{1.5}} \\
+            &= \pr{Z< -1.33} \\
+            &= 0.0918
+        \end{align}
+        Here we have that $p>\alpha$ at 5\% significance level, so we do not reject $H_0: \mu = 335$.
+        \end{framed}
+        
+        \item 500 male adults are given hypnotherapy, and the mean time taken to fall asleep is 333 seconds.
+        \begin{framed}{\textbf{Solution}}
+        We have that $n=500$ so the standard error is $\sigma/\sqrt{n} = 15/10\sqrt{5} \approx 0.671$. 
+        \begin{align}
+            p &= \given{\bar{X}<333}{\mu_{\bar{X}} = 335} \\
+            &= \pr{\frac{\bar{X} - 335}{0.671} < \frac{333-335}{0.671}} \\
+            &= \pr{Z< -2.98} \\
+            &= 0.0014
+        \end{align}
+        Here we have that $p<\alpha$ at 5\% significance level, so we do reject $H_0: \mu = 335$.
+        \end{framed}
+        
+        \item What can you conclude about the relationship between the observed size of the effect of the hypnotherapy and whether it is statistically significant?
+        \begin{framed}{\textbf{Solution}}
+        As $n$ increases, the standard error ($\sigma/\sqrt{n}$) for the estimate of the mean ($\mu$) decreases, meaning that the data is more centralised around the hypothesised mean of 335 seconds. This is shown in \Cref{fig:hw2q3d}, where the shape of the graph becomes less of a smooth bell curve and more pointy. Given that the graph is a probability density function, we can calculate the probability of observing particular values by summing the area under the graph up to that particular valued point. You can see in \Cref{fig:hw2q3d} that the area under the graph to the left of 333 becomes smaller as $n$ increases, so we can conclude that the probability ($p$-value) becomes smaller as $n$ increases, i.e. the statistical significance of the observed size of the effect of hypnotherapy increases as $n$ increases.
+        \end{framed}
+        \FloatBarrier
+        \begin{figure}[h]
+            \centering
+        \begin{tikzpicture}
+        \begin{axis}[no markers, domain=330:340, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=7cm, width=12cm, xtick={333,335}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major, legend entries ={$n=25$, $n=100$, $n=500$}]
+            %\draw (7,.13) node[magenta!50!black] {$\Bar{X} - \bar{Y}\sim \N \brac{56,\sfrac{81}{23}}$};
+            %\addplot [fill=magenta!20, draw=none, domain=-1:0] {gauss(7,3.75325945303)} \closedcycle;
+            \addplot [very thick,cyan!50!black] {gauss(335,3)};
+            \addplot [very thick,magenta!50!black] {gauss(335,1.5)};
+            \addplot [very thick,green!50!black] {gauss(335,0.67082039324993690892275210061938)};
+        \end{axis}
+        \end{tikzpicture}
+        \caption{The sampling distributions of the mean of $X \sim \brac{335, 15^2}$ for samples of size 25, 100 and 500.}
+        \label{fig:hw2q3d}
+        \end{figure}
+        \FloatBarrier
+    \end{enumerate}
+\end{enumerate}
+
+\subsection{Homework 3}
+\begin{enumerate}
+    \item In Exercise 3 of Section 2.1 we learned that the time it takes for adult men to fall asleep is distributed as a normal with a mean of $\mu = 335$ seconds and a standard deviation of $\sigma = 15$ seconds. Twenty-five adult men undergo hypnotherapy to decrease the time required to fall asleep. We wish to test the following hypotheses:
+    \[
+    \begin{matrix}
+    H_0 & : & \mu=335 \\
+    H_A & : & \mu < 335
+    \end{matrix}
+    \]
+    \begin{enumerate}
+        \item The mean observed time for the 25 men to fall asleep is 330.1 seconds. Will $H_0$ be rejected at a significance level of $\alpha = .05$?
+        \begin{framed}{\textbf{Solution}}
+        We reject $H_0$ when our sample statistic is more extreme than 95\% of the population (note that the defined hypotheses imply a one-sided test):
+        \begin{align}
+            z = \frac{\bar{x} - \mu_0}{\sigma/\sqrt{n}} &< -z^*_{1 -\alpha} \\
+            \implies \frac{330.1 - 335}{15/\sqrt{25}} &< -1.645 \\
+            \implies -1.6\bar{3} &< -1.645.
+        \end{align}
+        As the above inequality does not hold (obviously $-1.633>-1.645$), we can conclude that our statistic is not extreme enough to warrant us rejecting the null hypothesis. If we wish to find the $p$-value:
+        \begin{align}
+            p &= \given{\bar{X}<330.1}{\mu_0 = 335} \\
+            &= \pr{\frac{\bar{X} - \mu_0}{\sigma/\sqrt{n}} < \frac{330.1 - 335}{15/\sqrt{25}}} \\
+            &= \pr{Z < -1.6\bar{3}} \\
+            &= 0.0516.
+        \end{align}
+        Again, we do not reject $H_0$ as we have that $p>\alpha$. 
+        \end{framed}
+        
+        \item The mean observed time for the 25 men to fall asleep is 330.0 seconds. Will $H_0$ be rejected at a significance level of $\alpha = .05$?
+        \begin{framed}{\textbf{Solution}}
+        In the same manner as before, we compare our statistic to the critical $z$-value:
+        \begin{align}
+            z = \frac{\bar{x} - \mu_0}{\sigma/\sqrt{n}} &< -z^*_{1 -\alpha} \\
+            \implies \frac{330.0 - 335}{15/\sqrt{25}} &< -1.645 \\
+            \implies -1.\bar{6} &< -1.645.
+        \end{align}
+        As the above inequality does hold (obviously $-1.667<-1.645$), we can conclude that our statistic is extreme enough to warrant us rejecting the null hypothesis. If we wish to find the $p$-value:
+        \begin{align}
+            p &= \given{\bar{X}<330.0}{\mu_0 = 335} \\
+            &= \pr{\frac{\bar{X} - \mu_0}{\sigma/\sqrt{n}} < \frac{330.0 - 335}{15/\sqrt{25}}} \\
+            &= \pr{Z < -1.\bar{6}} \\
+            &= 0.0475.
+        \end{align}
+        Again, we reject $H_0$ as we have that $p<\alpha$, but realise that we only reject at a 5\% significance level and not at 1\%. 
+        \end{framed}
+        
+        \item State to what extent you believe it is useful to think about results in terms of rigid, accept/reject decisions based on a particular significance level.
+        \begin{framed}{\textbf{Solution}}
+        How powerful is our test? Firstly, for what value $\bar{x}$ do we certainly reject $H_0$ (it's somewhere between 330.0 and 330.1 seconds):
+        \begin{align}
+            z = \frac{\bar{x} - \mu_0}{\sigma/\sqrt{n}} &< -1.645 = - z^*_{1 - \alpha} \\
+            \implies \bar{x} &< \mu_0 - 1.645 \times \frac{\sigma}{\sqrt{n}} = 335 - 1.645 \times 3 = 330.065 \\
+            \implies \text{power} &= \text{probability of correctly rejecting $H_0$} 
+            \shortintertext{Recall that we reject $H_0$ when $\bar{x}<330.065$ and we are correct in doing so when the alternative hypothesis is true.}
+            &=\given{\bar{X}<330.065}{\mu = \mu_A},
+            \shortintertext{where $\mu_A$ is the true population mean. Suppose $\mu_A = 330.0$}
+            \implies \text{power} &= \pr{\frac{\bar{X} - \mu_A}{\sigma/\sqrt{n}} < \frac{330.065 - 330.0}{15/5}} \\
+            &= \pr{Z< 0.021\bar{6}} \\
+            &= 0.5080
+        \end{align}
+        So, the probably of a Type II error is around 50\%, which is relatively high so it does not seem useful to base our decision on a significance test in this case\footnotemark. In order to increase the power of our test, we need to increase the sample size and in doing so we aim for power of at least 80\%:
+        \begin{align}
+            0.80 &\approx \pr{Z<0.85} 
+            \shortintertext{You can find the above $z$ critical value from Table A.}
+            &= \pr{\frac{\bar{X} - \mu_A}{\sigma/\sqrt{n}} < \frac{330.065 - 330.0}{15/\sqrt{n}}}. 
+            \shortintertext{So, we are looking for a $n$ which satisfies}
+            \implies 0.85 &= \frac{330.065 - 330.0}{15/\sqrt{n}} \\
+            \implies n &= \brac{\frac{0.85 \times 15}{330.065 - 330.0}}^2 \approx 38476.33.
+            \intertext{This tells us that, if the researchers want to be 80\% certain that they are correctly rejecting the null hypothesis, they would require at least 38,477 participants for this study (assuming that the true mean is 330.0 seconds). For a hypothetical $\mu_A$, we require an $n$ that satisfies:}
+            n &= \brac{\frac{0.85 \times 15}{330.065 - \mu_A}}^2.
+        \end{align}
+        The size of the required $n$ is extremely large if the distance between $\mu_A$ and 330.065 is less then 1, i.e. $329.065<\mu_A<331.065$, but is decreasing if the distance is more than 1. This also gives you a bit of an idea about power: obviously $\mu_A$ is \textbf{fixed in the population} but a researcher might have a hypothesised mean $\mu_0$ is stupidly too far away from $\mu_A$ in order to overflate the power of their test. \\
+        We can also look at this from the perspective of confidence intervals, which we learnt in the previous homework is more informative than a $p$-value. 
+        \begin{align}
+            \text{90\% CI for } \mu : \qquad \bar{x} \pm z^*_{1 - \sfrac{\alpha}{2}} \times \frac{\sigma}{\sqrt{n}} &= 330.1 \pm 1.645 \times \frac{15}{5} \\
+            &= \brac{325.165, 335.035}.
+            \shortintertext{If we have a sample mean of 330.1 seconds, then the 90\% CI (90\%, because the hypothesis test is one-tailed) for $\mu$ contains $\mu_0 = 335$.}
+            \text{90\% CI for } \mu : \qquad \bar{x} \pm z^*_{1 - \sfrac{\alpha}{2}} \times \frac{\sigma}{\sqrt{n}} &= 330.0 \pm 1.645 \times \frac{15}{5} \\
+            &= \brac{324.065, 334.935}.
+        \end{align}
+        Here we see that $\mu_0 =335$ is not in the CI (only just), but if we were to round up to the nearest second then it would be included. If we were to increase our $n$, then $\mu_0 =335$ might not be in the 90\% CI for either part a or b. This question is just trying to show you the silly-side of significance testing.  
+        \end{framed}
+        \footnotetext{This paper might be of interest \url{https://www.jstor.org/stable/449153}, or this one \url{https://academic.oup.com/ptj/article/79/2/186/2837119}.}
+    \end{enumerate}
+    
+    \item In Section 2.2.1, we discussed a neuropsychologist studying about information processing in parents with closed head injury (CHI). The neuropsychologist used a number of reaction time tasks that are assumed to require different forms of information processing. His hypothesis is that CHI patients process information more slowly than healthy people.
+    \\
+    The test scores for healthy adults in the mirror-reading task are normally distributed with mean of 3000ms and standard deviation 400ms. The neurologist administers the task to 16 randomly selected CHI patients, at least 1 year after their accident. The researcher wonders how easy it would be to determine that the CHI patients were slower if they were much slower than the healthy participants. He chooses a 5\% significance level, and ``much slower'' to him is 3300ms.
+    \begin{framed}\textbf{[Extract important information:]}\\
+        $X \sim \N \brac{3000, 400^2}$: test scores for healthy adults in the mirror-reading task. \\
+        $n=16$ of CHI patients. 
+        \[
+        \begin{matrix}
+            H_0 & : & \mu = 3000 \\
+            H_A & : & \mu > 3000 
+        \end{matrix}
+        \]
+        $\alpha = 0.05$ significance level. \\
+        $\Bar{X}\sim \N \brac{3000, 400^2/16}$: sampling distribution of the mean of $X$.
+    \end{framed}
+    \begin{enumerate}
+        \item Find the power of the test under the alternative hypothesis that $\mu$ for the CHI patients is 3300ms.
+        \begin{framed}{\textbf{Solution}}
+        The neuropsychologist considers rejecting $H_0$ if the sample statistic is more extreme than 3164.5ms:
+        \begin{align}
+            \bar{x} &> \mu_0 + z_{1 - \alpha}^* \times \frac{\sigma}{\sqrt{n}} = 3000 + 1.645 \times \frac{400}{\sqrt{16}} = 3164.5.
+            \shortintertext{Given that we are told the true population mean is 3300ms, how powerful is our test?}
+            \text{power} &= \pr{\frac{\bar{X} - \mu_A}{\sigma/\sqrt{n}} > \frac{3164.5 - 3300}{400/\sqrt{16}}} = \pr{Z > -1.355} = 0.9123.
+        \end{align}
+        This tells us that, given a sample size of 16 we will correctly reject the null hypothesis 91.23\% of the time.
+        \end{framed}
+        
+        \item Does the experiment have a good chance of finding a significant effect if the mean score for the CHI patients is truly 3300ms?
+        \begin{framed}{\textbf{Solution}}
+        You will find a significant effect is the $p$-value is less that $\alpha$. This question is asking you for the probably of rejecting $H_0$ given that $H_0$ is false, i.e. what is the power. This question is hoping to trick you, but it's the same as part a and only hopes that you explore the theory a little deeper. \\
+        In general, researchers like to ensure that the power of their test is around 80\% and in our case we have \~91\%.
+        \end{framed}
+        
+        \item Explain why the experiment will give much clearer results if the researcher were to take a larger sample.
+        \begin{framed}{\textbf{Solution}}
+        We reject the null hypothesis at 5\% significance level when 
+        \begin{align}
+            \bar{x} &> \mu_0 + z^*_{1 - \alpha} \times \frac{\sigma}{\sqrt{n}} = 3000 + \frac{658}{\sqrt{n}}. 
+            \shortintertext{Assuming that the true population mean is 3300ms, the power of our test is}
+            &= \pr{\frac{\bar{X} - \mu_A}{\sigma/\sqrt{n}} > \frac{\brac{3000 + \frac{658}{\sqrt{n}}} - 3300}{400/\sqrt{n}}} \label{eq:hw3q2c}\\
+           \text{power} &= \pr{Z > 1.645 - 0.75 \sqrt{n}} \\
+            &= 
+            \begin{dcases}
+                \pr{Z>-1.355} = 0.9123, & n = 16; \\
+                \pr{Z>-2.105} = 0.9821, & n=25; \\
+                \pr{Z>-2.855} = 0.99785, & n=36; \\
+                \pr{Z>-3.605} \approx 1, & n=49.
+            \end{dcases}
+        \end{align}
+        If $n$ increases, then the standard error of the estimate of $\mu$ decreases: $\bar{X}$ estimates $\mu$ such that $\bar{X} \sim \N \brac{\mu, \sigma^2/n}$, where $\sigma/\sqrt{n}$ is the standard error of the estimate. In our case, $\bar{X} \sim \N \brac{3000, 400^2/n}$ and in \Cref{fig:hw3q2c} you can observe how increasing $n$ causes the sampling distribution of the mean to become more centralised around $\mu$, whether it be 3000ms or 3300ms.
+        \end{framed}
+    \FloatBarrier
+    \begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[no markers, domain=2950:3350, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=6cm, width={}, xtick={3000, 3164.5, 3300}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major]
+        \addplot [fill=cyan!20, draw=none, domain=3164.5:3350] {gauss(3300,100)} \closedcycle;
+        \addplot [very thick,cyan!50!black] {gauss(3000,100)};
+        \addplot [very thick,cyan!50!black] {gauss(3300,100)};
+        \draw node[above , black] at (axis cs:3000,0){$n=16$};
+        \end{axis}
+    \end{tikzpicture}
+        %%%%%%%%%%%%%%
+    \begin{tikzpicture}
+        \begin{axis}[no markers, domain=2950:3350, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=6cm, width={}, xtick={3000, 3131.6, 3300}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major]
+        \addplot [fill=magenta!20, draw=none, domain=3131.6:3350] {gauss(3300,80)} \closedcycle;
+        \addplot [very thick,magenta!50!black] {gauss(3300,80)};
+        \addplot [very thick,magenta!50!black] {gauss(3000,80)};
+        \draw node[above , black] at (axis cs:3000,0){$n=25$};
+        \end{axis}
+    \end{tikzpicture}
+        %%%%%%%%%%%%%%
+    \begin{tikzpicture}
+        \begin{axis}[no markers, domain=2950:3350, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=6cm, width={}, xtick={3000, 3094, 3300}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major]
+        \addplot [fill=red!20, draw=none, domain=3094:3350] {gauss(3300,57.1428571)} \closedcycle;
+        \addplot [very thick,red!50!black] {gauss(3000,57.1428571)};
+        \addplot [very thick,red!50!black] {gauss(3300,57.1428571)};
+        \draw node[above , black] at (axis cs:3000,0){$n=36$};
+        \end{axis}
+    \end{tikzpicture}
+        %%%%%%%%%%%%%%
+    \begin{tikzpicture}
+        \begin{axis}[no markers, domain=2950:3350, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=6cm, width={}, xtick={3000, 3109.6666666666666666666667, 3300}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major]
+        \addplot [fill=green!20, draw=none, domain=3109.6666666666666666666667:3350] {gauss(3300,66.66666666666666667)} \closedcycle;
+        \addplot [very thick,green!50!black] {gauss(3000,66.66666666666666667)};
+        \addplot [very thick,green!50!black] {gauss(3300,66.66666666666666667)};
+        \draw node[above , black] at (axis cs:3000,0){$n=49$};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{The shaded area represents the power of the test for increasing values of $n$, where the random variable $\bar{X}$ is distributed normally with standard error $400/\sqrt{n}$ ($\alpha = 0.05$; $H_0:$ $\mu=3000$ms; $H_a: $ $\mu>3000$ms; true mean $\mu=3300$ms). As $n$ increases, the ``cut-off value'' decreases resulting in an increase of statistical power (caeteris paribus).}
+    \label{fig:hw3q2c}
+    \end{figure}
+    \FloatBarrier
+        
+        \item Suppose that the alternative hypothesis is farther away from $H_0$; say, for instance, $\mu$ is truly 3500 for the CHI patients. Will the power than be higher or lower than the value you found in Question 2a?
+        \begin{framed}{\textbf{Solution}}
+        In the same way that we calculated power in \eqref{eq:hw3q2c}:
+        \begin{align}
+            \text{power} &= \pr{\frac{\bar{X} - \mu_A}{\sigma/\sqrt{n}} > \frac{\brac{3000 + \frac{658}{\sqrt{n}}}-3500}{400/\sqrt{n}}} \\
+            &= \pr{Z>1.645 - 1.25\sqrt{n}}\\
+            &= 
+            \begin{dcases}
+                \pr{Z>-3.355} = 0.9996, & n = 16; \\
+                \pr{Z>-3.5} \approx 1, & n>16.
+            \end{dcases}
+        \end{align}
+        Fixing $n$ and $\alpha$, the power of the test increases dramatically if the true mean is much farther away from the hypothesised mean than if they are close.
+        \end{framed}
+        
+        \item Another way to determine whether the sample size is large enough to yield worthwhile results is to determine whether the 90\% confidence interval will be narrow enough. (90\%, because the hypothesis test is one-tailed). The researcher would like the confidence interval to be more narrow than 60ms. Is his sample size large enough?
+        \begin{framed}{\textbf{Solution}}
+        If the researcher would like the confidence interval to be more narrow than 60ms, then they would like to ensure that the margin of error is no more than 30ms:
+        \begin{align}
+            \text{margin of error} = z_{1 - \sfrac{\alpha}{2}}^* \times \frac{\sigma}{\sqrt{n}} &< 30 \\
+            \implies 1.645 \times \frac{400}{\sqrt{n}} &<30 \\
+            \implies n &> \brac{\frac{1.645 \times 400}{30}}^2 \approx 481.071.
+        \end{align}
+        The sample size of 16 is too small to ensure that the confidence interval be narrower than 60ms; a sample size of at least 482 is needed.
+        \end{framed}
+        
+        \item Explain the relationship between the width of the confidence interval and how worthwhile the experiment is.
+        \begin{framed}{\textbf{Solution}}
+        If the researcher wants to ensure that their experiment is worthwhile then they need to ensure that the probabilities of Type I or II errors are maintained at an acceptable level, which are typically $\alpha = 0.05$ and $\beta = 0.20$. The value of $\alpha$ will dictate which critical value is used for the width of the interval and $\beta$ will dictate the appropriate sample size.
+        \begin{align}
+            \text{width of the CI} &= 2 \times z^*_{1 - \sfrac{\alpha}{2}} \times \frac{\sigma}{\sqrt{n}}. \\
+            1 - \beta &= \pr{Z<\vbrac{z^*_{1 - \alpha} - \frac{\vbrac{\mu_0 - \mu_A}}{\sigma/\sqrt{n}}}} .
+            \shortintertext{The researcher prescribes $\alpha = 0.05$ and $\beta = 0.20$.}
+            \implies \text{width of the CI} &= 2 \times 1.96 \times \frac{\sigma}{\sqrt{n}}. 
+            \shortintertext{The researcher can increase or decrease their sample size to ensure an appropriate width, or alternatively they can ensure that their requirements for power are met:}
+            \implies 0.80 &= \pr{Z<\vbrac{1.645 - \frac{\vbrac{\mu_0 - \mu_A}}{\sigma/\sqrt{n}}}} 
+            \shortintertext{Checking table A we note that $\pr{Z<2.05}\approx0.8$.}
+            \implies \vbrac{1.645 - \frac{\vbrac{\mu_0 - \mu_A}}{\sigma/\sqrt{n}}} &= 2.05 \\
+            \implies n &= \brac{\frac{\vbrac{\mu_0 - \mu_A}}{\sigma \times \brac{2.05 - 1.645}}}^2
+        \end{align}
+        To summarise, a researcher ensures that their experiment is worthwhile (reducing probability of Type I and II errors) by setting the sample size to restrict the width of the confidence interval.
+        \end{framed}
+    \end{enumerate}
+    
+    \item The scores of men on the Chapin Test for Social Insight (CTSI; [Chapin, 1942]) are normally distributed with mean 25 and standard deviation 5. Assume a sample size of $N = 16$. A study is run to determine whether women have a lower average score on the CTSI than men. We let $\mu$ be the mean of the population of women, and we wish to test the following hypotheses:
+    \[
+    \begin{matrix}
+        H_0 & : & \mu=25 \\
+        H_a & : & \mu<25
+    \end{matrix}
+    \]
+    We will assume that the standard deviation of the population of women is also 5. For $\alpha = 0.05$, $H_0$ can be rejected when $\bar{x} < 22.95$.
+    \begin{enumerate}
+        \item Compute the probability of a Type I error. In other words, compute the probability that one will reject $H_0$ if the mean of the population of women is exactly $\mu = 25$.
+        \begin{framed}{\textbf{Solution}}
+        Under $H_0$, the probability of a Type I error is equal to $\alpha$.
+        \begin{align}
+            \alpha &= \given{\bar{X}<22.95}{\mu=25}\\
+            &= \pr{\frac{\bar{X} - \mu_0}{\sigma/\sqrt{n}} < \frac{22.95 - 25}{5/\sqrt{16}}} \\
+            &= \pr{Z<-1.64} \\
+            &= 0.0516
+        \end{align}
+        \end{framed}
+        
+        \item Compute the probability of a Type II error when $\mu = 22$. In other words, compute the probability that one will not reject $H_0$ if the mean of the population of women truly is $\mu = 22$.
+        \begin{framed}{\textbf{Solution}}
+        We don't reject $H_0$ if $\bar{x}\geq 22.95$, so
+        \begin{align}
+            \beta &= \given{\bar{X}>22.95}{\mu=22} \\
+            &= \pr{\frac{\bar{X} - \mu_A}{\sigma/\sqrt{n}} > \frac{22.95 - 22}{5/\sqrt{16}}} \\
+            &= \pr{Z>0.76} \\
+            &= 0.2236. \\
+            \implies \text{power} = 1 - \beta &= 0.7764.
+        \end{align}
+        \end{framed}
+        
+        \item Compute the probability of a Type II error if $\mu = 20$.
+        \begin{framed}{\textbf{Solution}}
+        \begin{align}
+            \beta &= \given{\bar{X}>22.95}{\mu=20} \\
+            &= \pr{\frac{\bar{X} - \mu_A}{\sigma/\sqrt{n}} > \frac{22.95 - 20}{5/\sqrt{16}}} \\
+            &= \pr{Z>2.36} \\
+            &= 0.0091. \\
+            \implies \text{power} = 1 - \beta &= 0.9909
+        \end{align}
+        \end{framed}
+        
+        \item Using your computation of the Type II error rate of the test, find the power if $\mu = 22$.
+        \begin{framed}{\textbf{Solution}}
+        Power = $1 - \beta = 0.7764$.
+        \end{framed}
+        \FloatBarrier
+        \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[no markers, domain=18:29, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=5cm, width=12cm, xtick={22, 22.95, 25}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major]
+            \addplot [fill=cyan!20, draw=none, domain=18:22.95] {gauss(22,1.25)} \closedcycle;
+            \addplot [very thick,cyan!50!black] {gauss(25,1.25)};
+            \addplot [very thick,cyan!50!black] {gauss(22,1.25)};
+            \draw node[above , black] at (axis cs:21.5,0.06){power = 0.7764};
+            \end{axis}
+        \end{tikzpicture}
+        \caption{}
+        \label{fig:hw3q3d}
+        \end{figure}
+        \FloatBarrier
+        
+        \item Using your computation of the Type II error rate of the test, find the power if $\mu = 20$.
+        \begin{framed}{\textbf{Solution}}
+        Power = $1 - \beta = 0.9909$.
+        \end{framed}
+        \FloatBarrier
+        \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}[no markers, domain=16.8:29, samples=100, axis lines*=left, xlabel=$x$, every axis y label/.style={at=(current axis.above origin),anchor=south}, every axis x label/.style={at=(current axis.right of origin),anchor=west}, height=5cm, width=12cm, xtick={20, 22, 22.95, 25}, ytick=\empty, enlargelimits=false, clip=false, axis on top, grid = major]
+            \addplot [fill=cyan!20, draw=none, domain=16.8:22.95] {gauss(20,1.25)} \closedcycle;
+            \addplot [very thick,cyan!50!black] {gauss(25,1.25)};
+            \addplot [very thick,cyan!50!black] {gauss(20,1.25)};
+            \addplot [dashed,magenta!50!black] {gauss(22,1.25)};
+            \draw node[above , black] at (axis cs:20,0.06){power = 0.7764};
+            \end{axis}
+        \end{tikzpicture}
+        \caption{}
+        \label{fig:hw3q3e}
+        \end{figure}
+        \FloatBarrier
+    \end{enumerate}
+    
+    \item If $\sigma$ is unknown and we must estimate it, we generally use the $t$ statistic. Suppose the $t$ statistic for the test
+    \[
+    \begin{matrix}
+        H_0 & : & \mu=25 \\
+        H_a & : & \mu<25
+    \end{matrix}
+    \]
+    based on $N=10$ observations, has a value of $t = -4.45$.
+    \begin{enumerate}
+        \item What are the appropriate degrees of freedom for this $t$ test?
+        \begin{framed}{\textbf{Solution}}
+        Degrees of freedom is just allocation in a loose sense: in this case, we have 10 observations and once we have allocated 9 of these observations with a place number, there is no freedom for the \nth{10} allocation. Hence, we have 9 degrees of freedom.
+        \end{framed}
+        
+        \item Using the $t$-distribution Critical Values Table, find the $p$ value resulting from the $t$ test.
+        \begin{framed}{\textbf{Solution}}
+        Check table B at the back of the Agresti book, and you will see that $\pr{\vbrac{t}_{\text{df}=9}<4.297} = 0.9980$, so this means that our $p$-value must be less than $(1 - 0.9980)/2 = 0.001$ as our statistic is more extreme than the critical value. This can be seen in \Cref{fig:hw3q4b}.
+        \end{framed}
+        \FloatBarrier
+        \begin{figure}[h]
+        \centering
+            \begin{tikzpicture}[
+            declare function={gamma(\z)=
+            2.506628274631*sqrt(1/\z)+ 0.20888568*(1/\z)^(1.5)+ 0.00870357*(1/\z)^(2.5)- (174.2106599*(1/\z)^(3.5))/25920- (715.6423511*(1/\z)^(4.5))/1244160)*exp((-ln(1/\z)-1)*\z;},
+            declare function={student(\x,\n)= gamma((\n+1)/2.)/(sqrt(\n*pi) *gamma(\n/2.)) *((1+(\x*\x)/\n)^(-(\n+1)/2.));}]
+            \begin{axis}[axis lines = left, enlargelimits = upper, samples = 50, xtick = {-4.297, 4.297}, width=12 cm, height=5 cm, ytick=\empty]
+                \addplot [very thick,cyan!50!black, smooth, domain=-6:6] {student(x,9)};
+                \node[pin=90:{$-4.45$}] at (axis cs:-4.45,0) {};
+            \end{axis}
+            \end{tikzpicture}
+        \caption{For the $t$-distribution with 9 degrees of freedom, a test statistic of $-4.45$ is significant at every level as the (two-sided) critical value for $\alpha = 0.002$ is $-4.297$.}
+        \label{fig:hw3q4b}
+        \end{figure}
+        \FloatBarrier
+    \end{enumerate}
+\end{enumerate}
+
+
+

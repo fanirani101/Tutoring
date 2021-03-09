@@ -1,0 +1,268 @@
+\section{Overview}
+\begin{enumerate}[label=\textbf{\S~\arabic*}, ref=\S~\arabic*]
+\setcounter{enumi}{4}
+    \item Statistical inference: estimation
+    \begin{enumerate}[label=\textbf{\S~5.\arabic*}, ref=\S~5.\arabic*]
+        \item Point and interval estimation
+        \begin{itemize}
+            \item \textit{Point estimate}: estimates a parameter with a single number, e.g. $\Bar{x}$ is a point estimate of $\mu$.
+            \item \textit{Interval estimate}: estimates a parameter with a range, e.g. confidence interval $\Bar{x} \pm z^* \sigma/\sqrt{n}$ is an interval estimate of $\mu$. 
+            \item \textit{Confidence interval} = point estimate $\pm$ margin of error. The confidence level comes from: the probability that the estimate is within $z^*_{1 - \alpha/2}$ standard errors from the parameter is equal to $(1-\alpha)\%$, e.g. the probability that $\Bar{x}$ is in the range $(\mu - 1.96 \times \sigma/\sqrt{n}, \mu+ 1.96 \times \sigma/\sqrt{n})$ is 95\%. 
+            \begin{itemize}
+                \item In the long run, $(1-\alpha)\%$ of such intervals would contain the parameter.
+                \item With repeated sampling, there is a $(1-\alpha)\%$ chance that a random confidence interval will cover the true parameter value. 
+                \item $(1-\alpha)\%$ percent of the time (in repeated sampling from the same population) the parameter will lie in the range of the confidence interval.
+            \end{itemize}
+            \item \textit{Margin of error} = critical statistic ($z^*$ or $t^*$, for e.g.) $\times$ standard error of the point estimate. As the sample size increases, the standard error of the estimate decreases and thus so does the margin of error.
+            \item \textit{Unbiased estimate}: the expected value of the point estimate is equal to the parameter - another way to write it is $\text{Bias}\brac{\Bar{x}} = \mu - \E \brac{\Bar{x}}$. An estimator is unbiased if the bias equals zero. Recall: the expected value is basically the mean.
+            \item \textit{Efficient estimator}: an unbiased estimator which has a small standard error (relatively speaking) is also efficient. You can Google the Cramer-Rao inequality if you have interest, but it is not pertinent to this course. For example, $\Bar{x}$ is efficient but $Q_2$ is not.
+            \item \textit{Notation}: $\hat{\phantom{\mu}}$ over a parameter denotes an estimator of the parameter, e.g. $\hat{\mu}$ estimates $\mu$.
+            \item \textit{Central Limit Theorem (CLT)}: due to the \textit{Law of Large Numbers (LLN)}, as the sample size increases the estimate tends towards the parameter which is seen by the decreasing standard error.
+        \end{itemize}
+        
+        \item Confidence interval for a proportion
+        \begin{itemize}
+            \item \textit{CI for proportion $\pi$}: \[
+            \hat{\pi} \pm z^*_{1-\alpha/2} \times se_{\hat{\pi}} , \quad \text{where } se_{\hat{\pi}} = \sqrt{\frac{\hat{\pi}\brac{1 - \hat{\pi}}}{n}}.
+            \]
+        \end{itemize}
+        
+        \item Confidence interval for a mean:
+        \begin{itemize}
+            \item \textit{CI for mean $\mu$}: 
+            \[
+            \bar{x} \pm z^*_{1-\alpha/2} \times \frac{\sigma}{\sqrt{n}} , \quad \text{where $\sigma$ is known.}
+            \]
+            \[
+            \bar{x} \pm t^*_{1-\alpha/2, \text{ df}} \times \frac{s}{\sqrt{n}} , \quad \text{where $\sigma$ is unknown.}
+            \]
+            $t^*_{1-\alpha/2, \text{ df}}$ is larger than $z^*_{1-\alpha/2}$ to account for the additional error introduced by using $s$ to estimate $\sigma$ for the standard error. They are equal for ``infinite sample sizes'', or near equal for very large sizes.
+            \item \textit{Robustness}: a method is robust if it performs well despite violations of certain assumptions, e.g. normality. This is important from the book: \textit{...the confidence interval for a mean using the $t$ distribution is robust against violations of the normal population assumption. Even if the population is not normal, confidence intervals based on the $t$ distribution still work quite well, especially when $n$ exceeds about 15. As the sample size gets larger, the normal population assumption becomes less important, because of the Central Limit Theorem. The sampling distribution of the sample mean is then bell shaped even when the population distribution is not. The actual probability that the 95\% confidence interval method contains $\mu$ is close to 0.95 and gets closer as $n$ increases. \newline An important case when the method does not work well is when the data are extremely skewed or contain extreme outliers. Partly this is because of the effect on the method, but also because the mean itself may not then be a representative summary of the centre.} This last part refers to using the median or the mode to summarise the centre, instead of the mean, because of skew.
+        \end{itemize}
+        
+        \item Choice of sample size
+        \begin{itemize}
+            \item \textit{Limiting the margin of error for a certain confidence level}: suppose you want to ensure that the margin of error is less than (or equal to) some value, say $A$, with probability $\brac{1 - \alpha}\%$ then you need to alter the sample size, e.g.
+            \begin{align*}
+                \underbrace{\overbrace{z^*_{1 - \alpha/2}}^{\text{critical value}} \times \overbrace{\frac{\sigma}{\sqrt{n}}}^{\text{standard error}}}_{\text{margin of error}} &\leq A & &\iff & n &\geq \brac{z^*_{1 - \alpha/2} \times \frac{\sigma}{A}}^2.
+            \end{align*}
+            This works with any standard error formula (e.g. using $\sigma$ or $s$) and any critical value (e.g. $z^*_{1 - \alpha/2}$ or $t^*_{1 - \alpha/2, \text{ df}}$); just rearrange to solve for $n$.
+        \end{itemize}
+        
+        \item Estimation Methods: Maximum Likelihood and the Bootstrap
+        \begin{itemize}
+            \item From the book: \textit{For point estimation, Fisher proposed the maximum likelihood estimate. This estimate is the value of the parameter that is most consistent with the observed data, in the following sense: If the parameter equalled that number (i.e., the value of the estimate), the observed data would have had greater chance of occurring than if the parameter equalled any other number.} 
+            \item Also: \textit{In fact, with random sampling, the maximum likelihood estimate of a population proportion is necessarily the sample proportion.}
+            \item \textit{Maximum likelihood estimator (MLE)}: is the most efficient for large enough samples, consistent (bias diminishes to zero as $n$ increases), and have approximately normal sampling distribution. This normality of the sampleing distribution allows us to compute confidence intervals. 
+            \item $\bar{x}$ is the MLE for $\mu$, as the standard error for $Q_2$ is $1.25 \sigma /\sqrt{n}$, which is more than the standard error for $\bar{x}$.
+            \item \textit{Bootstrap method}: treat the sampling distribution as if it is the population distribution, e.g. $\bar{X}\sim \N \brac{\mu, \sigma/\sqrt{n}}$ is the sampling distribution of the mean. Then take $n$ samples (with replacement) from the sampling distribution, and compute the mean. Do this about 1000 times, and the means of the means will be near the parameter value for the population. (See the simulation \url{http://onlinestatbook.com/stat_sim/sampling_dist/index.html}.)
+        \end{itemize}
+    \end{enumerate}
+    
+    \item Statistical Inference: Significance Tests
+    \begin{enumerate}
+        \item The five parts of a significance test
+        \begin{itemize}
+            \item \textit{Hypothesis}: a predictive statement about a parameter that can be tested. The null hypothesis always corresponds to ``no difference'', ``no effect'' or ``no association'' to protect society from any dramatic changes (Type I errors). The alternative is the converse of the null hypothesis, or the research hypothesis - if ``no effect'' then what we expect. We do not ``accept'' either, we only choose to ``reject'' or ``not reject'' the null hypothesis.
+            \item \textit{Significance test}: uses sample data to summarise evidence about a hypothesis.
+            \item The five parts are: assumptions, hypotheses, test statistic, $p$-value, and conclusion.
+            \item \textit{Test statistic}: summary statistic used in significance test, e.g. $z$-value or $t$-value.
+            \item \textit{$p$-value}: the probability of achieving a test statistic equal to or more extreme than that which we observed, e.g. $\pr{\vbrac{Z}>z} = p$ (two-tailed $H_a$), $\pr{Z>z}=p$ (right-tailed $H_a$) or $\pr{Z<z}=p$ (left-tailed $H_a$). The smaller the $p$-value, the greater the evidence against $H_0$ and thus for rejecting it. We decide to reject for $p< \alpha$, where $\alpha$ is our accepted probability of a Type I error.
+            \item \textit{$\alpha$-level}: if you decrease $\alpha$, the critical value $z^*$ or $t^*$ increases. The converse is also true. $\alpha$ is the probability of a Type I error.
+        \end{itemize}
+        
+        \item Significance test for a mean
+        \begin{itemize}
+            \item \textit{Assumptions:} random sampling and parameter is normally distributed.
+            \item \textit{Hypotheses:} $H_0$: $\mu=\mu_0$ and $H_a$: $\mu \ne \mu_0$ for two-sided, $\mu>\mu_0$ for right-tailed or $\mu<\mu_0$ for left-tailed.
+            \item \textit{Test statistic:} $z$-value for $\sigma$ in the population known, or $t$-value for $\sigma$ in the population unknown.
+            \begin{align*}
+                z &= \frac{\bar{x} - \mu_0}{\sigma/\sqrt{n}} \sim \N \brac{0,1}. \\
+                t &= \frac{\bar{x} - \mu_0}{s/\sqrt{n}} \sim t \brac{\text{df}=n-1}.
+            \end{align*}
+            \item \textit{$p$-value}: probability of observing a test statistic at least or more extreme (in the direction of $H_a$). 
+            \item \textit{Conclusion}: reject $H_0$ if $p<\alpha$ and assumptions are met.
+        \end{itemize}
+        
+        \item Significance test for a proportion
+        \begin{itemize}
+            \item \textit{Assumptions:} random sampling and sampling distribution of estimate is approximately normal. The latter implies that $n \Hat{\pi}$ and $n \brac{1 - \Hat{\pi}}$ must both be at least 10.
+            \item \textit{Hypotheses:} $H_0$: $\pi=\pi_0$ and $H_a$: $\pi \ne \pi_0$ for two-sided, $\pi>\pi_0$ for right-tailed or $\pi<\pi_0$ for left-tailed.
+            \item \textit{Test statistic:} 
+            \begin{align*}
+                z &= \frac{\Hat{\pi} - \pi_0}{se_0} \sim \N \brac{0,1}; &
+                se_0 &= \sqrt{\frac{\pi_0 \brac{1 - \pi_0}}{n}}.
+            \end{align*}
+            \item \textit{$p$-value}: probability of observing a test statistic at least or more extreme (in the direction of $H_a$). 
+            \item \textit{Conclusion}: reject $H_0$ if $p<\alpha$ and assumptions are met.
+        \end{itemize}
+        
+        \item Decisions and types of errors in tests
+        \begin{itemize}
+            \item \textit{Type I error}: probability of incorrectly rejecting the null hypothesis, $\alpha$. ($H_0$ is true in reality.)
+            \item \textit{Type II error}: probability of incorrectly not rejecting the null hypothesis, $\beta$. ($H_a$ is true in reality.)
+            \item \textit{Power}: probability of correctly rejecting the null hypothesis, $1-\beta$. ($H_a$ is true in reality.)
+            \item \textit{Sensitivity}: probability of correctly not rejecting the null hypothesis, $1-\alpha$. ($H_0$ is true in reality.)
+            \item $alpha$ and $\beta$ are inversely proportional, meaning that a decrease in $\alpha$ results in an increase in $\beta$, and vice-versa. Recall that power is $1 - \beta$, so decreasing $\alpha$ decreases the power of your test. 
+            \item If the test statistic is in the rejection region, then $p<\alpha$ and the hypothesised parameter value, e.g. $\mu_0$, is not included in the confidence interval of the same $\alpha$ level.
+        \end{itemize}
+        
+        \item Limitations of significance tests
+        \begin{itemize}
+            \item \textit{Statistical vs. practical significance}: a small $p$-value only signifies that the probability, under the null hypothesis, of observing a test statistic as or more extreme is very small. This does not give any indication of the true value of the parameter. Confidence intervals are ``better'' in the sense that they do give an indication of the true value of the parameter.
+            \item \textit{Effect size}: used to summarise practical significance, e.g. indicates how likely a researcher is observe an effect. Cohen's $d$ gives the $z$-value, which should be at least 0.8 to have a large effect; medium is around 0.5 and small is $\leq 0.2$.
+            \item Read page 173.
+        \end{itemize}
+        
+        \item \textit{Finding $\mathbb{P}$(Type II error)}
+        \begin{itemize}
+            \item Calculate the cut-off value, i.e. the sample statistic for which you would reject $H_0$, e.g. $\bar{x}>\mu_0 + z^*\times \sigma/\sqrt{n}$ is the cut-off value for a right-tailed hypothesis test.
+            \item Use the cut-off value to calculate the $z$-value using $\mu=\mu_a$, where $\mu_a$ is the true parameter value (not $H_0$), e.g.
+            \begin{align*}
+                z &= \frac{\sbrac{\mu_0 + z^*\times \sigma/\sqrt{n}} - \mu_a}{\sigma/\sqrt{n}} = \frac{\mu_0 - \mu_a}{\sigma/\sqrt{n}} + z^*.
+            \end{align*}
+            \item Compute the $p$-value, e.g. $p=\pr{Z>z}$ where $z$ was calculated above. This $p$-value is the probability of a Type II error.
+            \item $1 -p$-value gives you the power. 
+        \end{itemize}
+        
+        \item Small-sample test for a proportion— the Binomial distribution
+        \begin{itemize}
+            \item $X \sim \mathcal{B}in(n,p)$ is the probability distribution of ``success'' with probability $p$ and $n$ trials, and $\pr{X=k}$ is the probability of $k$ ``successes''. 
+            \begin{align*}
+                \pr{X=k} &= \binom{n}{k} p^k (1-p)^{n-k} = \frac{n!}{k!\brac{n-k}!} p^k (1-p)^{n-k}
+            \end{align*}
+            $\Hat{p}$ estimates $p$ and can be written at $x/n$, where $x$ is the number of successes in a sample of size $n$. 
+            \item The mean is $np$ and the standard deviation is $\sqrt{np(1-p)}$. 
+            \item If the expected frequencies for both success and failure, $np$ and $n(1-p)$, are both greater than 10, then you can approximate using the \textit{Normal approximation to the Binomial distribution}, $X \sim \N \brac{\mu=np, \sigma=\sqrt{np(1-p)}}$.
+        \end{itemize}
+    \end{enumerate}
+    
+    \item Comparison of two groups
+    \begin{enumerate}[label=\textbf{\S~7.\arabic*}, ref=\S~7.\arabic*]
+        \item Preliminaries for comparing groups
+        \begin{itemize}
+            \item \textit{Response variable}: the dependent variable, usually the $y$ values is $(x,y)$ bivariate data sets. 
+            \item \textit{Explanatory variable}: the independent variable, usually the $x$ values is $(x,y)$ bivariate data sets. 
+            \item \textit{Longitudinal study}: same subjects but testing at 2 or more time periods. Usually you compare the difference. Also called matched pairs or dependent sample. 
+            \item Read for yourself from page 193 about \textit{cross-sectional studies}, \textit{experimental studies}, \textit{experimental} vs. \textit{control group}, etc.
+            \item If two estimates from independent samples have standard errors $se_1$ and $se_2$, then the sampling distribution of their difference has the estimated standard error $\sqrt{se_1^2 + se_2^2} = \sqrt{s_1^2/n_1 + s_2^2/n_2}$.
+            \item \textit{Ratios}: if the ratio of two values equals 1, then they are equal, e.g. if the ratio of sample means is $11.9/8.3=1.43$ then one of the sample means is 1.43 times the other. Can be used for effect size.
+        \end{itemize}
+        
+        \item Categorical data: comparing two proportions
+        \begin{itemize}
+            \item If you have two populations with proportions $\pi_1$ and $\pi_2$ and you calculate the sample proportions $\Hat{\pi}_1$ and $\Hat{\pi}_2$, the sampling distribution of their difference is Normal with mean $\pi_2 - \pi_1$ and variance $\Hat{\pi}_1\brac{1 - \Hat{\pi}_1}/n_1 + \Hat{\pi}_2\brac{1 - \Hat{\pi}_2}/n_2$ (take the square root of the variance for the standard error). We estimate $\pi_2 - \pi_1$ with $\Hat{\pi}_1 - \Hat{\pi}_2$.
+            \item \textit{Confidence interval for difference of proportions}: 
+            \begin{align*}
+                \brac{\Hat{\pi}_1 - \Hat{\pi}_2} \pm z^*_{1 - \alpha/2} \times se; && se &= \sqrt{\frac{\Hat{\pi}_1\brac{1 - \Hat{\pi}_1}}{n_1} + \frac{\Hat{\pi}_2\brac{1 - \Hat{\pi}_2}}{n_2}}.
+            \end{align*}
+            If the confidence interval contains zero, then you cannot reject the claim that the proportions are the same. This inference depends on the standard error, of course, as a large standard error would indicate that there is a lot of error associated with the estimate. If zero is in the CI, then the lower bound must be \textit{negative} and the upper bound must be \textit{positive}.
+            \\
+            If the CI contains only negative values then we infer that $\pi_2<\pi_1$, and conversely if the CI contains only positive values then we infer that $\pi_2>\pi_1$.
+            \item \textit{Hypothesis testing}: we assume that there is not difference; $H_0$: $\pi_1 = \pi_2$, $\pi = \pi_2 - \pi_1=0 = \pi_0$.
+            \begin{align*}
+                \Hat{\pi} &= \frac{\Hat{\pi}_1 n_1 + \Hat{\pi}_2 n_2}{n_1 + n_2} = \frac{\sum x_1 + \sum x_2}{n_1 + n_2},
+                \shortintertext{where $x_1$ is the sum of successes in sample 1, and similarly for $x_2$ - it is the sum of successes in sample 2.}
+                \implies z &= \frac{\brac{\Hat{\pi}_2 - \Hat{\pi}_1} - \pi_0}{se_0} = \frac{\Hat{\pi}_2 - \Hat{\pi}_1}{se_0}; \\ 
+                se_0 &= \sqrt{\Hat{\pi} \brac{1-\Hat{\pi}}\brac{\frac{1}{n_1} + \frac{1}{n_2}}}.
+            \end{align*}
+        \end{itemize}
+        \clearpage
+        \item Quantitative data: comparing two means
+        \begin{itemize}
+            \item \textit{Confidence interval for the difference in means}: for independent random samples from two normally distributed populations, the CI for $\mu_2 - \mu_1$ is
+            \begin{align*}
+                \brac{\bar{y}_2 - \bar{y_2}} \pm t^*_{1 - \alpha/2, \text{ df}=n_1+n_2-2} \times se; && se &= \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}.
+            \end{align*}
+            This method is robust to violations of the normal assumption provided that $n\geq 30$ because of the CLT. Beaware of extreme outliers or extreme skew which may nullify the robustness for $n\approx 30$.
+            \\
+            Similar to the inference about proportions, you want that zero is in the interval and if not, then at least you can infer that one group has a higher mean than the other.
+            \\
+            In this case, we don't assume equal variance in the populations (homoskedasticity).
+            \item \textit{Significance tests are differences in means}: we claim that there is no difference; $H_0$: $\mu_1 = \mu_2$ or $\mu = \mu_2 - \mu_1 = 0 = \mu_0$.
+            \begin{align*}
+                t &= \frac{\brac{\mu_2 - \mu_1} - \mu_0}{se} = \frac{\mu_2 - \mu_1}{se}; & se &= \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}; & \text{df} &= n_1 + n_2 - 2.
+            \end{align*}
+        \end{itemize}
+        \item Comparing means with dependent samples
+        \begin{itemize}
+            \item Can be called matched pairs, longitudinal study (with the same subjects), before and after, repeated measures, crossover study, etc.
+            \item The sampling distribution of the difference between two groups is Normally distributed with mean $\mu_d = \mu_2 - \mu_1$ and standard error $s_d$, which is the standard deviation of the difference between scores (pairwise).
+            \item \textit{Paired-difference $t$ test}: we test $H_0$: $\mu_d = \mu_2 - \mu_1 = 0 = \mu_{d,0}$, where
+            \begin{align*}
+                (y_1,y_2) &&\implies y_d &= y_2-y_1 \\
+                &&\implies t &= \frac{\bar{y}_d - \mu_{d,0}}{se_d} = \frac{\bar{y}_d}{s_d/\sqrt{n}}; & se_d &= \frac{s_d}{\sqrt{n}}.
+                \shortintertext{Also, the confidence interval is given by}
+                &&&\bar{y_d} \pm t^*_{1 - \alpha/2, \text{ df}=n-1} \times se_d.
+            \end{align*}
+            \item The standard error for the difference in scores (dependent sample) is lower than the standard error for comparing two independent samples. 
+        \end{itemize}
+        
+        \item Other methods for comparing means
+        \begin{itemize}
+            \item \textit{Pooled standard deviation}: if we assume that variances of two independent samples are equal in the population (homoskedasticity), then we can pool their individual variances:
+            \begin{align*}
+                s_p &= \sqrt{\frac{\brac{n_1 - 1}s_1^2 + \brac{n_2 - 1}s_2^2}{n_1 + n_2-2}} &\implies se_p&= s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}.
+                \shortintertext{The confidence interval for $\mu_2 - \mu_1$ in this case is}
+                &&\implies & \brac{\bar{y}_2 - \bar{y}_1} \pm t^*_{1 - \alpha/2, \text{ df}=n_1 + n_2 - 2} \times se_p. 
+                \shortintertext{For testing against the claim $H_0$: $\mu_1 = \mu_2$ or $\mu = \mu_2 - \mu_1 = 0 = \mu_0$,}
+                t &= \frac{\brac{\bar{y}_2 - \bar{y}_1} - \mu_0}{se_p} \\
+                &= \frac{\bar{y}_2 - \bar{y}_1}{s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}.
+            \end{align*}
+            \item Read page 207 about randomised block design. 
+            \item The assumption of homoskedasticity $\brac{\sigma^1 \approx \sigma^2}$ modifies your $t$-test through the standard error and degrees of freedom. In general, the degrees of freedom is bounded: $\min\cbrac{n_1 - 1, n_2-1} \leq \text{df} \leq n_1 + n_2 - 2$. The upper bound is when homoskedasticity is assumed, and the lower bound is a rough estimate of the solution to the Welch-Satterthwaite equation - used in Welch's $t$-test. The df is smaller and standard error is larger if you do not assume homoskedasticity. If the sample sizes are equal, then the standard errors are also equal despite the homoskedasticity assumption.
+            \item Read page 209-210, up to \S~7.6.
+        \end{itemize}
+    \end{enumerate}
+    
+    \item Analyzing association between categorical variables
+    \begin{enumerate}[label=\textbf{\S~8.\arabic*}, ref=\S~8.\arabic*]
+        \item Contingency tables
+        \begin{itemize}
+            \item You assume under $H_0$: the variables are independent or $\given{A}{B} = \pr{A}$, which is equivalent to $\pr{A \cap B} = \pr{A} \times \pr{B}$ using \textit{Bayes' Rule for Independent Events}. For a $2 \times 2$ contingency table, e.g. \Cref{tab:overview8.1.1}, you calculate the expected frequencies as what you expect under $H_0$, so the expected frequency for the cell $A \cap C$ is $\E{\brac{A \cap C}} = n \times \pr{A} \times \pr{C}$.
+            \begin{table}[h]
+                \centering
+                \begin{tabular}{r|c|c|l}
+                    {} & $A$ & $B$ & Marginal \\ \hline
+                    $C$ & $\pr{A \cap C}$ & $\pr{B \cap C}$ & $\pr{C}$ \\ \hline
+                    $D$ & $\pr{A \cap D}$ & $\pr{B \cap D}$ & $\pr{D}$ \\ \hline
+                    Marginal & $\pr{A}$ & $\pr{B}$ & $\pr{\Omega}=1$
+                \end{tabular}
+                \caption{}
+                \label{tab:overview8.1.1}
+            \end{table}
+            \FloatBarrier
+            If you have the observed frequencies, e.g. \Cref{tab:overview8.1.2}, you can calculate the expected frequencies as $\E{\brac{A \cap C}} = O_{A} \times O_{C}/n$.
+            \begin{table}[h]
+                \centering
+                \begin{tabular}{r|c|c|l}
+                    {} & $A$ & $B$ & Marginal \\ \hline
+                    $C$ & $O_{A \cap C}$ & $O_{B \cap C}$ & $O_{C}$ \\ \hline
+                    $D$ & $O_{A \cap D}$ & $O_{B \cap D}$ & $O_{D}$ \\ \hline
+                    Marginal & $O_{A}$ & $O_{B}$ & $O_{\Omega}=n$
+                \end{tabular}
+                \caption{}
+                \label{tab:overview8.1.2}
+            \end{table}
+            \item \textit{Joint distribution}: $\pr{A \cap B}$.
+            \item \textit{Marginal distribution}: $\pr{A}$.
+            \item \textit{Conditional distribution}: $\given{A}{B}$.
+            \item Two categorical variables are statistically independent if, in the population, the $\given{A}{C} = \given{A}{D} = \pr{A}$ and $\given{B}{C} = \given{B}{D} = \pr{B}$, with reference to \Cref{tab:overview8.1.1}. The variables are statistically dependent if they are not equal. Refer to table 8.3 on page 229.
+        \end{itemize}
+        
+        \item Chi-squared test of independence
+        \begin{itemize}
+            \item We claim $H_0$: the variables are statistically independent. If the expected cell frequencies $f_E$ are at least 5 (in \textit{every} cell), then we can use the Pearson $\chi^2$ statistic:
+            \begin{align*}
+                \chi^2 &= \sum \frac{\brac{f_O - f_E}^2}{f_E} \sim \chi^2 \brac{\text{df}=\brac{r-1}(c-1)}.
+            \end{align*}
+            Read the sub-section ``THE CHI-SQUARED PROBABILITY DISTRIBUTION'' from page 231 onward. 
+            \item If there is one cell which has expected cell frequency less than 5, then you need to use Fisher's Exact test. 
+            \item For $2 \times 2$ contingency tables, you can model this test of independence as a difference of proportions $z$-test (see table 8.6 on page 234).
+            \begin{align*}
+                z^2 &= \frac{\brac{\Hat{\pi}_2 - \Hat{\pi}_1}^2}{se_0^2} \sim \chi^2 \brac{\text{df}=1}.
+            \end{align*}
+            Interesting to note: $\pr{\chi^2_1> 1.96^2} = \pr{\chi^2_1>3.84} = 0.05$ and $\pr{\vbrac{z}>1.96 = 0.05}$, so for df $=1$ the $\chi^2$ distribution has the same critical values as the $z$-distribution.
+        \end{itemize}
+    \end{enumerate}
+\end{enumerate}

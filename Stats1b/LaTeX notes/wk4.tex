@@ -1,0 +1,143 @@
+\phantomsection
+\section*{Week 6}
+\addcontentsline{toc}{section}{Week 6}
+
+\phantomsection
+\subsection*{Contingency tables and tests for independence}
+\addcontentsline{toc}{subsection}{Contingency tables and tests for independence}
+The term contingency table comes from the fact that they outline all potential events in a certain situation. 
+\begin{table}[h]
+    \centering
+    \begin{tabular}{rr|cc|l}
+        {} & {} & \multicolumn{2}{c|}{Cat${}_1$} & {} \\
+        {} & {} & X & Y & Marginal \\ \hline
+        \multicolumn{1}{r}{\multirow{2}{*}{Cat${}_2$}} & W & $a$ & $b$ & $a + b$ \\
+        \multicolumn{1}{r}{} & Z & $c$ & $d$ & $c + d$ \\ \hline
+        {} & Marginal & $a + c$ & $b + d$ & $n$
+    \end{tabular}
+    \caption{}
+    \label{tab:1wk6}
+\end{table}
+You usually want to know if 2 categorical variables, Cat${}_1$ and Cat${}_2$, are independent and test this with hypothesis testing: $H_0$ is always that the variables are independent (odds ratio equal to 1) and $H_a$ is that they are dependent is some way. There are the usual alternative hypotheses:
+\begin{itemize}
+    \item Left-tailed: there is negative association between the variables. That is, the observations tend to lie in lower left and upper right of the contingency table. Formally, $H_A: $ odds ratio less than 1.
+    
+    \item Right-tailed: there is positive association between the variables. That is, the observations tend to lie in upper left and lower right. of the contingency table. Formally, $H_A: $ odds ratio less than 1.
+    
+    \item Two-tailed: there is no prior alternative. Formally, $H_A: $ odds ratio not equal to 1.
+\end{itemize}
+The odds ratio is the ratio of probabilities: the numerator is the probability that event $W$ occurs given that event $X$ has/will occur divided by the probability that event $W$ occurs given that event $Y$ has/will occur - \underline{the odds of $W$ given $X$ or $Y$}. The denominator is the probability that event $Z$ occurs given that event $X$ has/will occur divided by the probability that event $Z$ occurs given that event $Y$ has/will occur - \underline{the odds of $Z$ given $X$ or $Y$}. When you hear, ``the odds are 3:2'', this refers to the odds ratio which would then be $3/2$. Similarly, if the odds are 7:1 then the odds ratio is $7/1$.
+\begin{align}
+    \frac{\given{W}{X} / \given{W}{Y}}{\given{Z}{X} / \given{Z}{Y}} &= \dfrac{\brac{\frac{a}{a+c}} / \brac{\frac{b}{b+d}}}{\brac{\frac{c}{a+c}} / \brac{\frac{d}{b+d}}} \\
+    &= \dfrac{\brac{\frac{a}{a+c}} / \brac{\frac{c}{a+c}}}{\brac{\frac{b}{b+d}} / \brac{\frac{d}{b+d}}} \\
+    &= \frac{a/c}{b/d}
+\end{align}
+The Cat${}_1$ is independent of Cat${}_2$ if this odds ratio is equal to 1 \textit{in the population}. We do hypothesis testing using a sample to determine this. In this course, usually two-sided hypothesis testing is conducted as you are not bothered by the positive or negative association, just whether there is any association. If the odds ratio equals 1 in the population, you say that the probability that event $W$ or $Z$ occurs is equally likely, regardless of $X$ or $Y$ occurring, i.e. the chance of $W$ or $Z$ is independent of $X$ or $Y$. \\
+This is attributed to Bayes' Rule for Independence, which simply states 
+\begin{align}
+    \given{A}{B} &= \frac{\pr{A \cap B}}{\pr{B}} = \frac{\pr{A} \times \pr{B}}{\pr{B}} = \pr{A}.
+\end{align}
+The degrees of freedom is $(r-1)\times (c-1)$ where $r$ is the number of rows and $c$ is the number of columns of the contingency table; for a $2 \times 2$, the df is $(2-1)\times(2-1)=1$. \\
+It is also possible that you encounter contingency tables with more than two factors per variable, for example: suppose in a population of 1 million you take a random sample of 650 people to compare their neighbourhood with their occupation.
+\begin{table}[h]
+    \centering
+    \begin{tabular}{rr|cccc|l}
+        {} & {} & \multicolumn{4}{c|}{Neighbourhood} & {} \\
+        {} & {} & A & B & C & D & Total \\ \hline
+        \multicolumn{1}{r}{\multirow{3}{*}{Occupation}} & White collar & 90 & 60 & 104 & 95 & 349 \\
+        \multicolumn{1}{r}{} & Blue collar & 30 & 50 & 51 & 20 & 151 \\
+        \multicolumn{1}{r}{} & Unemployed & 30 & 40 & 45 & 35 & 150 \\ \hline
+        {} & Total & 150 & 150 & 200 & 150 & 650
+    \end{tabular}
+    \caption{This is a $3 \times 4$ contingency table, for which the odds ratio is not as simply calculated as it was for the $2 \times 2$ contingency table.}
+    \label{tab:2wk6}
+\end{table}
+The steps for undertaking a test for independence using contingency tables is as follows:
+\begin{enumerate}
+    \item \textbf{Formalise your hypotheses:} \\
+    $H_0:$ the variables ``neighbourhood'' and ``occupation'' are independent - $OR=1$. \\
+    $H_A:$ they are dependent - $OR\ne 1$.
+    
+    \item \textbf{Compute cell proportions under null hypothesis:} \\
+    You begin by assuming that the variables are independent, so the probability that a person lives in neighbourhood A and has a white collar job is just the multiplication of the probabilities of either:
+    \begin{align}
+        \pr{\text{white collar job} \cap \text{n'hood A}} &= \pr{\text{white collar job}} \times \pr{\text{white collar job}} \\
+        &= \frac{349}{650} \times \frac{150}{650} \\
+        &\approx 0.1239.
+    \end{align}
+    This says that, if the variables are independent we should have roughly 12.39\% of the sample in that particular cell. Compute all and draw up a table of proportions or percentages under the null hypothesis:
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{rr|cccc|l}
+        {} & {} & \multicolumn{4}{c|}{Neighbourhood} & {} \\
+        {} & {} & A & B & C & D & Total \\ \hline
+        \multicolumn{1}{r}{\multirow{3}{*}{Occupation}} & White collar & 12.39\% & 12.39\% & 16.52\% & 12.39\% & 53.69\% \\
+        \multicolumn{1}{r}{} & Blue collar & 5.36\% & 5.36\% & 7.15\% & 5.36\% & 23.23\% \\
+        \multicolumn{1}{r}{} & Unemployed & 5.33\% & 5.33\% & 7.10\% & 5.33\% & 23.09\% \\ \hline
+        {} & Total & 23.08\% & 23.08\% & 30.77\% & 23.08\% & 100\%
+    \end{tabular}
+    \caption{}
+    \label{tab:3wk6}
+    \end{table}
+    
+    \item \textbf{Check the expected cell frequencies:} \\
+    To determine the expected frequencies, you calculated what you expect the cell frequency to be (under the null hypothesis and with sample size $n$), i.e. $f_e = n \times \%$, where \% is drawn from \Cref{tab:3wk6}. The expected frequency for white collar workers living in neighbourhood A in a sample of size 650 given that the \% chance of either is 53.69\% and 23.08\%, respectively, is 
+    \begin{align}
+        \E \brac{\text{white collar job} \cap \text{n'hood A}} &= 650 \times 12.39\% = 80.535.
+    \end{align}
+    Now you can do the same for the other 11 cells:
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{rr|cccc|l}
+        {} & {} & \multicolumn{4}{c|}{Neighbourhood} & {} \\
+        {} & {} & A & B & C & D & Total \\ \hline
+        \multicolumn{1}{r}{\multirow{3}{*}{Occupation}} & White collar & 80.535 & 80.535 & 107.38 & 80.535 & 349 \\
+        \multicolumn{1}{r}{} & Blue collar & 34.84 & 34.84 & 46.475 & 34.84 & 151 \\
+        \multicolumn{1}{r}{} & Unemployed & 34.645 & 34.645 & 46.15 & 34.645 & 150 \\ \hline
+        {} & Total & 150 & 150 & 200 & 150 & 650
+    \end{tabular}
+    \caption{Expected frequencies - it is important that the marginal frequencies are the same as in \Cref{tab:2wk6}.}
+    \label{tab:4wk6}
+    \end{table}
+    \begin{enumerate}
+        \item If you have a $2 \times 2$ contingency table, then df=1 and you need to ensure that the expected frequency \textit{in every cell} is more than \underline{10}. \textit{If not}, use Fisher's Exact test. 
+        
+        \item If you have an $r \times c$ contingency table, with df$>1$, then you need to ensure that the expected frequency \textit{in every cell} is more than \underline{5}. \textit{If not}, use Fisher's Exact test.
+    \end{enumerate}
+
+    \item \textbf{Conduct the test:}
+    \begin{enumerate}
+        \item \textbf{Chi-squared test $\chi^2$:} \\
+        In \Cref{tab:4wk6}, all expected frequencies are greater than 5 so we are fine conducting a \textit{Pearson $\chi^2$ test for independence}. 
+        \begin{align}
+            \chi^2 &= \sum_{i=1}^k \frac{\brac{f_{o,i} - f_{e,i}}^2}{f_{e,i}} \sim \chi^2_{\text{df}}; \qquad \text{where } k = r \times c \text{ and df}=(r-1)\times (c-1).
+        \end{align}
+        This says that the test statistic $\chi^2$ is the sum of $k = r \times c$ ratios of the squared difference between the observed and expected frequency, and the expected frequency, which is modelled by the chi-squared distribution with $(r-1)\times (c-1)$ degrees of freedom. For our example:
+        \begin{align}
+            \chi^2 &= \sum_{i=1}^12 \frac{\brac{f_{o,i} - f_{e,i}}^2}{f_{e,i}} \\
+            &= \frac{\brac{90 - 80.535}^2}{80.535} + \frac{\brac{60 - 80.535}^2}{80.535} + \frac{\brac{104 - 107.38}^2}{107.38} + \frac{\brac{95 - 80.535}^2}{80.535} \\
+            &{} \qquad {} \quad + \frac{\brac{30 - 34.84}^2}{34.84} + \frac{\brac{50 - 34.84}^2}{34.84} + \frac{\brac{51 - 46.475}^2}{46.475} + \frac{\brac{20 - 34.84}^2}{34.84} \\
+            &{} \qquad {} \quad + \frac{\brac{30 - 34.645}^2}{34.645} + \frac{\brac{40 - 34.645}^2}{34.645} + \frac{\brac{45 - 46.15}^2}{46.15} + \frac{\brac{35 - 34.645}^2}{34.645} \\
+            &\approx 1.1124 + 5.2361 + 0.10639 + 2.5981 \\
+            &{} \qquad {} \quad + 0.67238 + 6.5966 + 0.44057 + 6.3211 \\
+            &{} \qquad {} \quad + 0.62278 + 0.82771 + 0.028657 + 0.0036376 \\
+            &= 24.566 \sim \chi^2_{6}.
+        \end{align}
+        A general rule of thumb for critical $\chi^2$ values: for $\alpha = 0.05$, the critical value with df$= (r-1) \times (c-1)$ is near $r \times c$. For example, for 2 degrees of freedom (possibilities: $2 \times 3$ or $3 \times 2$ contingency tables) the critical value is 5.991 which is near $6 = 2 \times 3$. Another example, for 6 degrees of freedom (possibilities: $2 \times 7$, $3 \times 4$, $4 \times 3$, or $7 \times 2$) the critical value is 14.449 which is near $14=7 \times 2$. \\
+        If df=1, then you can just look at $z^2$ for the same critical values, i.e. $\chi^{2,*}_{1,\alpha} = \brac{z^{*}_{\alpha}}^2$. We can use \Cref{tab:1wk6} to model $z^2$:
+        \begin{align}
+            \Hat{\pi} &= \frac{a+c}{n} \\
+            se_0 &= \sqrt{\frac{\Hat{\pi} \brac{1 - \Hat{\pi}}}{n}} \\
+            \Hat{\pi}_1 &= \frac{a}{a+b} \\
+            \Hat{\pi}_2 &= \frac{c}{c+d} \\
+            z^2 &= \frac{\brac{\Hat{\pi}_1 - \Hat{\pi}_2}^2}{se_0^2} \sim \chi^2_1.
+        \end{align}
+        In our case, we have that the test statistic $\chi^2 = 24.566$ is more extreme than the critical value of $\chi^{2,*}_{6,0.05} = 12.592$ and thus provides significant evidence at the 5\% level of variable dependency. 
+        \begin{align}
+            p\text{-value} &= \pr{\chi^2_6 > 24.566} = 0.0004098 < 0.05= \alpha = \pr{\chi^2_6 >12.592 }.
+        \end{align}
+        
+        \item \textbf{Fisher's Exact test:} \\
+        You don't need to know how to compute this manually, only that you can use the computer to do it an must do so if an expected cell frequencies is less than 5 in a contingency table. It gives you the $p$-value so you can make inferences directly from the SPSS output.
+    \end{enumerate}
+\end{enumerate}
